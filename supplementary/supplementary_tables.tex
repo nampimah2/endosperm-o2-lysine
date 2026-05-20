@@ -5,17 +5,25 @@
 \usepackage{longtable}
 \usepackage{array}
 \usepackage{multirow}
+\usepackage{tabularx}
 \usepackage{float}
 \usepackage{caption}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{hyperref}
-\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{rotating}
+\usepackage{pdflscape}
 \renewcommand{\thetable}{S\arabic{table}}
 \setcounter{table}{0}
+\captionsetup[table]{labelfont=bf, labelsep=period}
 
-\title{\textbf{Supplementary Tables}\\[0.5em]
+\title{\textbf{Supplementary Data}\\[0.5em]
 \large Metabolic Reprogramming in the \textit{opaque2} Maize Endosperm:\\
-A Genome-Scale Model Reveals Coordinated Flux Rewiring for Lysine Overaccumulation\\[1em]
+A Genome-Scale Model Reveals Coordinated Flux Rewiring\\
+for Lysine Overaccumulation\\[1.5em]
 \normalsize Mary Nampimah, Rajdeep Khangura, Luis Avila-Ospina, Bertrand Hirel,\\
 Alexander Johnson, Sue Rhee, Surinder Chopra, Siela Maximova, Cathie Martin,\\
 and Oliver Fiehn}
@@ -23,7 +31,537 @@ and Oliver Fiehn}
 
 \begin{document}
 \maketitle
+\vspace{1em}
+\textbf{Supplementary Tables S1--S22} contain all quantitative tabular results
+supporting the main manuscript, organized by Results section.
+
 \tableofcontents
-\newpage
+\clearpage
+
+\section{Results 1.1: Wild-type and \textit{o2} Biomass Flux}
+
+\begin{table}[H]
+\centering
+\caption{Comparison of maximum biomass flux between wild-type (WT) and \textit{o2} mutant endosperm across development.}
+\label{stab:biomass}
+\begin{tabular}{cccccc}
+\toprule
+DAP & WT Biomass & O2 Biomass & Difference & Fold Change & \% Change \\
+\midrule
+6  & $5.99 \times 10^{-4}$ & $5.87 \times 10^{-4}$ & $-1.27 \times 10^{-5}$ & 0.979 & $-2.1$ \\
+8  & $5.66 \times 10^{-4}$ & $6.62 \times 10^{-4}$ & $+9.63 \times 10^{-5}$ & 1.170 & $+17.0$ \\
+10 & $6.28 \times 10^{-4}$ & $6.39 \times 10^{-4}$ & $+1.06 \times 10^{-5}$ & 1.017 & $+1.7$ \\
+12 & $7.27 \times 10^{-4}$ & $6.71 \times 10^{-4}$ & $-5.58 \times 10^{-5}$ & 0.923 & $-7.7$ \\
+15 & $1.60 \times 10^{-3}$ & $1.33 \times 10^{-3}$ & $-2.75 \times 10^{-4}$ & 0.828 & $-17.2$ \\
+18 & $1.23 \times 10^{-3}$ & $1.61 \times 10^{-3}$ & $+3.79 \times 10^{-4}$ & 1.307 & $+30.7$ \\
+22 & $3.60 \times 10^{-4}$ & $3.56 \times 10^{-4}$ & $-4.80 \times 10^{-6}$ & 0.987 & $-1.3$ \\
+30 & $1.75 \times 10^{-4}$ & $5.97 \times 10^{-5}$ & $-1.16 \times 10^{-4}$ & 0.340 & $-66.0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+
+\section{Results 1.2: Lysine Biosynthetic Pathway Flux}
+
+\begin{table}[H]
+\centering
+\caption{Flux through DAP decarboxylase (R00451, final step of lysine biosynthesis) across development.}
+\label{stab:lysine_bio}
+\begin{tabular}{ccccc}
+\toprule
+DAP & WT Flux & O2 Flux & Difference & Fold Change \\
+\midrule
+6  & $2.51 \times 10^{-6}$ & $3.73 \times 10^{-6}$ & $+1.22 \times 10^{-6}$ & 1.49 \\
+8  & $2.37 \times 10^{-6}$ & $4.05 \times 10^{-6}$ & $+1.68 \times 10^{-6}$ & 1.71 \\
+10 & $2.63 \times 10^{-6}$ & $2.68 \times 10^{-6}$ & $+5.0 \times 10^{-8}$  & 1.02 \\
+12 & $3.05 \times 10^{-6}$ & $2.81 \times 10^{-6}$ & $-2.4 \times 10^{-7}$  & 0.92 \\
+15 & $6.73 \times 10^{-6}$ & $5.80 \times 10^{-3}$ & $+5.80 \times 10^{-3}$ & 862 \\
+18 & $5.18 \times 10^{-6}$ & $6.77 \times 10^{-6}$ & $+1.59 \times 10^{-6}$ & 1.31 \\
+22 & $1.51 \times 10^{-6}$ & $1.251$               & $+1.251$               & $>8 \times 10^{5}$ \\
+30 & $\sim 0$              & $\sim 0$              & $\sim 0$               & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+
+\section{Results 1.3: Lysine Catabolism Bounds}
+
+\begin{table}[H]
+\centering
+\caption{Upper bounds ($v_{max}$) for lysine degradation reactions, showing reduced catabolic capacity in the \textit{o2} mutant.}
+\label{stab:bounds}
+\begin{tabular}{ccccccc}
+\toprule
+ & \multicolumn{3}{c}{R00716 (LKR alt)} & \multicolumn{3}{c}{R03102 (AAS DH)} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+DAP & WT $v_{max}$ & O2 $v_{max}$ & \% Diff & WT $v_{max}$ & O2 $v_{max}$ & \% Diff \\
+\midrule
+6  & 2.951 & 2.809 & $-4.8$  & 0.189 & 0.157 & $-16.9$ \\
+8  & 2.545 & 2.612 & $+2.6$  & 0.188 & 0.152 & $-19.1$ \\
+10 & 2.585 & 2.439 & $-5.6$  & 0.164 & 0.149 & $-8.7$  \\
+12 & 2.401 & 2.399 & $-0.1$  & 0.195 & 0.191 & $-2.0$  \\
+15 & 3.688 & 2.374 & $-35.6$ & 0.323 & 0.238 & $-26.2$ \\
+18 & 3.066 & 2.433 & $-20.6$ & 0.278 & 0.226 & $-19.0$ \\
+22 & 6.357 & 2.987 & $-53.0$ & 0.334 & 0.228 & $-31.8$ \\
+30 & 5.520 & 3.929 & $-28.8$ & 0.278 & 0.225 & $-18.8$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+
+\section{Results 1.4: Lysine Flux Balance}
+
+\begin{table}[H]
+\centering
+\caption{Lysine flux balance: total production, consumption, and turnover ratio (O2/WT).}
+\label{stab:balance}
+\begin{tabular}{ccccc}
+\toprule
+DAP & WT Production & O2 Production & O2/WT Ratio & Net Balance \\
+\midrule
+6  & $7.53 \times 10^{-6}$ & $9.92 \times 10^{-6}$ & 1.32   & $\approx 0$ \\
+8  & $7.11 \times 10^{-6}$ & $1.09 \times 10^{-5}$ & 1.53   & $\approx 0$ \\
+10 & $7.89 \times 10^{-6}$ & $8.04 \times 10^{-6}$ & 1.02   & $\approx 0$ \\
+12 & $9.15 \times 10^{-6}$ & $8.43 \times 10^{-6}$ & 0.92   & $\approx 0$ \\
+15 & $2.02 \times 10^{-5}$ & $1.74 \times 10^{-2}$ & 862    & $\approx 0$ \\
+18 & $1.55 \times 10^{-5}$ & $2.03 \times 10^{-5}$ & 1.31   & $\approx 0$ \\
+22 & $4.53 \times 10^{-6}$ & $3.752$               & $>8 \times 10^{5}$ & $\approx 0$ \\
+30 & $7.4 \times 10^{-7}$  & $2.5 \times 10^{-7}$  & 0.34   & $\approx 0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+
+\section{Results 1.5: Lysine Exchange Flux}
+
+\begin{table}[H]
+\centering
+\caption{Lysine exchange reaction flux (Exchange\_C00047[K,L]) across development.}
+\label{stab:exchange}
+\begin{tabular}{cccc}
+\toprule
+DAP & WT Exchange & O2 Exchange & Difference \\
+\midrule
+6  & 0 & 0 & 0 \\
+8  & 0 & 0 & 0 \\
+10 & 0 & 0 & 0 \\
+12 & 0 & 0 & 0 \\
+15 & 0 & $5.80 \times 10^{-3}$ & $+5.80 \times 10^{-3}$ \\
+18 & 0 & 0 & 0 \\
+22 & 0 & 1.251 & $+1.251$ \\
+30 & $-7.4 \times 10^{-7}$ & $-2.5 \times 10^{-7}$ & $+4.9 \times 10^{-7}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+
+\section{Results 1.6: Pathway-Level Flux Comparison}
+
+\begin{table}[H]
+\centering
+\caption{Pathway-level flux comparison (total absolute flux, percent change O2 vs.\ WT) at key developmental stages.}
+\label{stab:pathway}
+\begin{tabular}{lrrrr}
+\toprule
+Pathway & DAP 6 & DAP 15 & DAP 22 & DAP 30 \\
+\midrule
+Lysine Biosynthesis   & $+72.8\%$  & $+22.8\%$    & $+18{,}222\%$ & $+195{,}928\%$ \\
+Lysine Degradation    & --- & --- & --- & --- \\
+Aspartate Pathway     & $+72.8\%$  & $+5.7\%$     & $+9{,}280\%$  & $+195{,}928\%$ \\
+TCA Cycle             & $+14.5\%$  & $+72.4\%$    & $+2{,}163\%$  & $-66.2\%$ \\
+Glycolysis            & $+472.3\%$ & $-41.9\%$    & $+196.7\%$    & $-96.0\%$ \\
+Amino Acid Transport  & $+1.9\%$   & $+20{,}289\%$ & $+1.95 \times 10^{7}\%$ & $-65.9\%$ \\
+Starch Metabolism     & $-2.1\%$   & $-17.2\%$    & $-1.3\%$      & $-65.9\%$ \\
+Pentose Phosphate     & $-2.1\%$   & $-76.5\%$    & $+18.5\%$     & $-80.5\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+
+\section{Results 1.7: Amino Acid Biomass Coefficients}
+
+\begin{table}[H]
+\centering
+\caption{Biomass stoichiometric coefficients for aspartate-family amino acids (identical in WT and O2 at all DAPs).}
+\label{stab:aa_coefficients}
+\begin{tabular}{lc}
+\toprule
+Amino Acid & Biomass Coefficient (mmol/unit) \\
+\midrule
+Aspartate (C00049)   & $-0.045010$ \\
+Threonine (C00188)   & $-0.008145$ \\
+Lysine (C00047)      & $-0.004194$ \\
+Methionine (C00073)  & $-0.001789$ \\
+Isoleucine (C00407)  & $-0.000933$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+
+\section{Results 1.8: Rewiring Index and Carbon Allocation}
+
+\begin{table}[H]
+\centering
+\caption{Rewiring Index ($\mathrm{RI} = \sum_j |v_j^{\mathrm{O2}} - v_j^{\mathrm{WT}}|$) and carbon allocation to lysine across development.}
+\label{stab:rewiring_index}
+\begin{tabular}{ccccc}
+\toprule
+DAP & Rewiring Index & WT \% C to Lys & O2 \% C to Lys & O2/WT Ratio \\
+\midrule
+6  & 70.5  & $<0.01$ & 0.00   & ---   \\
+8  & 17.9  & $<0.01$ & 0.00   & ---   \\
+10 & 17.2  & $<0.01$ & $<0.01$ & ---  \\
+12 & 3.1   & $<0.01$ & $<0.01$ & ---  \\
+15 & 61.2  & $<0.01$ & 0.04   & $\gg 1$ \\
+18 & 151.5 & $<0.01$ & $<0.01$ & ---  \\
+22 & 228.1 & $<0.01$ & 4.31   & $\gg 100$ \\
+30 & 39.8  & 0.00    & 0.00   & ---   \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+
+\section{Results 1.9: Differential Reaction Analysis}
+
+\begin{table}[H]
+\centering
+\caption{Number of significantly different reactions at each developmental stage.}
+\label{stab:diff_summary}
+\begin{tabular}{cc}
+\toprule
+DAP & Reactions with $|\Delta v| > 10^{-6}$ \\
+\midrule
+6  & 373 \\
+8  & 455 \\
+10 & 331 \\
+12 & 367 \\
+15 & 489 \\
+18 & 468 \\
+22 & 314 \\
+30 & 443 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+\centering
+\caption{Top 10 most differentially active reactions between WT and \textit{o2} mutant.}
+\label{stab:top_diff}
+\small
+\begin{tabular}{lcc}
+\toprule
+Reaction & Max $|\Delta v|$ & Avg $|\Delta v|$ \\
+\midrule
+R00307[K,c]                   & 27.16 & 6.80 \\
+Exchange\_C00031[K,L]         & 25.44 & 6.92 \\
+ExB\_C00031[K]                & 25.44 & 6.92 \\
+PhloemImport\_C00095[K,c]     & 23.95 & 7.09 \\
+PhloemTransport\_C00095[K,c]  & 23.95 & 7.09 \\
+Exe4[K]                       & 11.04 & 1.47 \\
+Trans4[K]                     & 11.04 & 1.47 \\
+cpTransport\_C00011[K]        & 10.79 & 1.50 \\
+ExB\_C00089[K]                & 7.09  & 0.98 \\
+R00801[K,c]                   & 7.09  & 0.98 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+\centering
+\caption{Number of uniquely active reactions in each genotype across development.}
+\label{stab:unique}
+\begin{tabular}{ccccl}
+\toprule
+DAP & WT Active & O2 Active & Unique WT & Unique O2 \\
+\midrule
+6  & 550 & 617 & 41  & 108 \\
+8  & 600 & 622 & 67  & 89  \\
+10 & 584 & 564 & 60  & 40  \\
+12 & 571 & 560 & 49  & 38  \\
+15 & 585 & 571 & 90  & 76  \\
+18 & 570 & 606 & 67  & 103 \\
+22 & 538 & 553 & 82  & 97  \\
+30 & 518 & 512 & 103 & 97  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+
+\section{Results 1.10: Carbon and Nitrogen Budget Analysis}
+
+\begin{table}[H]
+\centering
+\caption{Carbon budget comparison at DAP 22: aggregate flux sums for central carbon pathway metabolites (cytosol + plastid).}
+\label{stab:carbon_budget}
+\begin{tabular}{lccc}
+\toprule
+Pathway Category & WT Flux Sum & O2 Flux Sum & Fold Change \\
+\midrule
+Glucose import    & 25.96 & 31.24 & 1.2$\times$ \\
+Glycolysis        & 11.59 & 41.24 & 3.6$\times$ \\
+TCA cycle         & 1.09  & 29.80 & 27.4$\times$ \\
+Pyruvate node     & 2.24  & 19.02 & 8.5$\times$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+\centering
+\caption{Nitrogen budget comparison at DAP 22: aggregate flux sums for nitrogen-containing pathway metabolites (cytosol + plastid).}
+\label{stab:nitrogen_budget}
+\begin{tabular}{lccc}
+\toprule
+Pathway Category & WT Flux Sum & O2 Flux Sum & Fold Change \\
+\midrule
+Nitrogen donors (Glu + Gln)  & 0.14  & 8.03   & 57$\times$ \\
+Aspartate family             & 0.07  & 7.81   & 111$\times$ \\
+Lysine pathway               & 0.07  & 11.56  & 165$\times$ \\
+Lysine degradation           & 0.00  & 2.50   & --- \\
+BCAA                         & 1000.07 & 1001.47 & 1.0$\times$ \\
+Aromatic AA                  & 0.00  & 2.85   & --- \\
+Other AA                     & 1000.00 & 1000.00 & 1.0$\times$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+\centering
+\caption{Key trade-offs at DAP 22: metabolites with the largest flux sum decreases in the \textit{o2} mutant, representing resources redirected away from their normal wild-type pathways.}
+\label{stab:tradeoffs}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Metabolite & WT $\Phi$ & O2 $\Phi$ & $\Delta\Phi$ \\
+\midrule
+D-Fructose [boundary]          & 24.180 & 16.463 & $-7.717$ \\
+Glucose-6-P (C00092) [cyt]     & 1.291  & 0.000  & $-1.291$ \\
+PPi [cyt]                      & 1.208  & 0.010  & $-1.198$ \\
+AMP [cyt]                      & 1.203  & 0.010  & $-1.193$ \\
+D-Fructose [cyt]               & 24.481 & 23.850 & $-0.631$ \\
+DHAP [pla]                     & 0.135  & 0.005  & $-0.130$ \\
+GAP [pla]                      & 0.130  & 0.005  & $-0.125$ \\
+1,3-bisP-glycerate [pla]       & 0.130  & 0.005  & $-0.125$ \\
+Palmitoyl-CoA [pla]            & 0.010  & 0.000  & $-0.010$ \\
+Palmitate [pla]                & 0.010  & 0.000  & $-0.010$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+
+\section{Results 1.11: Flux Bound Analysis}
+
+\begin{table}[H]
+\centering
+\caption{Top reactions where flux bound differences between WT and O2 at DAP 22 result in the largest actual flux changes, revealing the regulatory drivers of metabolic reprogramming.}
+\label{stab:bound_impacts}
+\small
+\begin{tabular}{lcccc}
+\toprule
+Reaction & WT $v_{max}$ & O2 $v_{max}$ & WT Flux & O2 Flux \\
+\midrule
+R00801 (Malate DH) [cyt]       & 10.86 & 15.42 & 0.301  & 7.388  \\
+R00342 (Asp aminotransferase) [cyt] & 7.41  & 10.18 & 0.120  & $-4.204$ \\
+R01512 (Enolase) [cyt]         & 17.24 & 20.36 & $-0.102$ & $-4.367$ \\
+R00216 (Malate DH) [pla]       & 4.16  & 4.33  & 0.197  & 4.326  \\
+R00480 (Aspartate kinase) [pla] & 6.58  & 5.70  & 0.000  & 1.251  \\
+R01213 (DAP aminotransferase) [pla] & 37.79 & 62.45 & 0.070  & 1.470  \\
+R02611 (Phe biosynthesis) [pla] & 3.71  & 4.11  & 0.000  & 1.424  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+
+\section{Results 1.12: Engineering Target Identification}
+
+\begin{table}[H]
+\centering
+\caption{Top knockout targets for lysine enhancement at 18 DAP (restricted to reactions with GPR associations). All targets maintain 100\% wild-type biomass.}
+\label{stab:ko_targets}
+\small
+\begin{tabular}{llccc}
+\toprule
+Rank & Reaction & Function & R00451 FC & Gene(s) \\
+\midrule
+1 & R00216[K,p] & Pyruvate DH (plastid) & 16,234$\times$ & 5 isozymes \\
+2 & R00282[K,c] & Acetyl-CoA carboxylase & 28$\times$ & 1 gene \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+\centering
+\caption{Representative overexpression targets for lysine enhancement at 18 DAP (2$\times$ $v_{max}$). Only reactions with GPR associations are shown.}
+\label{stab:oe_targets}
+\small
+\begin{tabular}{llccc}
+\toprule
+Reaction & Function & R00451 FC & Biomass Change & Gene(s) \\
+\midrule
+R01280[K,p] & Chorismate synthesis & 1.096$\times$ & +0.006 ppm & 13 isozymes \\
+R00883[K,c] & Phosphofructokinase & 1.096$\times$ & +0.006 ppm & 2 isozymes \\
+R00512[K,c] & Pyruvate kinase (cytosol) & 1.096$\times$ & +0.006 ppm & 4 isozymes \\
+R01015[K,c] & Glycolysis (GAPDH) & 1.096$\times$ & +0.006 ppm & 15 isozymes \\
+R00667[K,m] & TCA cycle (mitochondrial) & 1.096$\times$ & +0.006 ppm & 2 isozymes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+\centering
+\caption{o2-bound mimicry targets at 18 DAP.}
+\label{stab:mim_targets}
+\small
+\begin{tabular}{llcc}
+\toprule
+Reaction & Function & FC & $v_{max}$ Change \\
+\midrule
+MR00422[K,p] & Lipid metabolism (plastid) & 1.096$\times$ & $-$14.2\% \\
+MR00732[K,m] & Mitochondrial metabolism & 1.096$\times$ & $+$26.9\% \\
+R00342[K,p] & Transketolase (plastid) & 1.096$\times$ & $+$102.1\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+\centering
+\caption{Top combination strategies for lysine enhancement (18 DAP), restricted to reactions with GPR associations. All achieve 100\% biomass retention.}
+\label{stab:combos}
+\small
+\begin{tabular}{lcc}
+\toprule
+Combination Strategy & R00451 FC & Biomass \\
+\midrule
+MIM:MR00422 + KO:R00216 (Lipid $\downarrow$ + Pyr DH block) & 16,234$\times$ & 100\% \\
+OE:R01280 + KO:R00216 (Chorismate $\uparrow$ + Pyr DH block) & 16,234$\times$ & 100\% \\
+OE:R00883 + KO:R00216 (PFK $\uparrow$ + Pyr DH block) & 16,234$\times$ & 100\% \\
+MIM:R00342 + KO:R00282 (TKT $\uparrow$ + ACC block) & 28$\times$ & 100\% \\
+OE:R01280 + KO:R00282 (Chorismate $\uparrow$ + ACC block) & 28$\times$ & 100\% \\
+KO:R00216 + KO:R00282 (Pyr DH block + ACC block) & 16,234$\times$ & 100\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+\centering
+\caption{Gene-level engineering targets for lysine enhancement in wild-type maize endosperm. Genes were identified from GPR rules in the endosperm genome-scale model. Intervention type: KO = knockout; OE = overexpression; MIM = \textit{o2}-bound mimicry. All listed reactions have verified GPR associations; reactions without gene associations (e.g., inter-compartment transport steps) are excluded.}
+\label{stab:gene_targets}
+\small
+\begin{tabular}{p{2.8cm}p{2.5cm}p{0.6cm}p{1.0cm}p{0.6cm}p{4.5cm}}
+\toprule
+Reaction & Function & Type & FC & \#G & Gene IDs \\
+\midrule
+\multicolumn{6}{l}{\textbf{Tier 1: High-Impact Knockout Targets}} \\
+R00216[K,p] & Pyruvate DH (plastid) & KO & 16,234$\times$ & 5 & \textit{GRMZM2G085019}, \textit{GRMZM2G085747}, \textit{GRMZM2G122479}, \textit{GRMZM2G404237}, \textit{GRMZM5G886257} \\
+R00282[K,c] & Acetyl-CoA carboxylase & KO & 28$\times$ & 1 & \textit{GRMZM2G000236} \\
+\midrule
+\multicolumn{6}{l}{\textbf{Tier 2: Overexpression Targets}} \\
+R00883[K,c] & Phosphofructokinase & OE & 1.10$\times$ & 2 & \textit{GRMZM2G119300}, \textit{GRMZM2G149265} \\
+R00512[K,c] & Pyruvate kinase & OE & 1.10$\times$ & 4 & \textit{GRMZM2G067453}, \textit{GRMZM2G079944}, \textit{GRMZM2G149281}, \textit{GRMZM5G801436} \\
+R01015[K,c] & Glycolysis (GAPDH) & OE & 1.10$\times$ & 15 & \textit{GRMZM2G002807}, \textit{GRMZM2G017257}, +13 isozymes \\
+R00667[K,m] & TCA cycle (mito.) & OE & 1.10$\times$ & 2 & \textit{GRMZM2G080828}, \textit{GRMZM2G119583} \\
+R01280[K,p] & Chorismate synthase & OE & 1.10$\times$ & 13 & \textit{GRMZM2G002614}, \textit{GRMZM2G176546}, +11 isozymes \\
+\midrule
+\multicolumn{6}{l}{\textbf{Tier 3: \textit{o2}-Bound Mimicry Targets}} \\
+R00342[K,p] & Transketolase (plastid) & MIM & 1.10$\times$ & 11 & \textit{GRMZM2G035767}, \textit{GRMZM2G068455}, +9 isozymes \\
+MR00422[K,p] & Lipid metab. (plastid) & MIM & 1.10$\times$ & 15 & \textit{GRMZM2G002656}, \textit{GRMZM2G006620}, +13 isozymes \\
+MR00732[K,m] & Biotin metab. (mito.) & MIM & 1.10$\times$ & 4 & \textit{GRMZM2G377341}, \textit{GRMZM5G858094}, +2 isozymes \\
+\midrule
+\multicolumn{6}{l}{\textbf{Reference: Lysine Biosynthetic Pathway}} \\
+R02292[K,p] & DHDPS & OE & -- & 1 & \textit{GRMZM2G027835} \\
+R00451[K,p] & DAP decarboxylase & -- & -- & 1 & \textit{GRMZM2G020446} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+
+\section{Results 1.13: Flux Variability Analysis}
+
+\begin{table}[H]
+\centering
+\caption{FVA maximum achievable flux for key lysine pathway reactions at each developmental stage. All values in mmol g DW$^{-1}$ h$^{-1}$ at 100\% optimal biomass.}
+\label{stab:fva_lys}
+\small
+\begin{tabular}{ccccccc}
+\toprule
+& \multicolumn{2}{c}{R00451[K,p]} & \multicolumn{2}{c}{cmTransport\_C00047} & \multicolumn{2}{c}{R00715[K,c]} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+DAP & WT max & O2 max & WT max & O2 max & WT max & O2 max \\
+\midrule
+ 6  & 0.111 & 0.108 & 0.037 & 0.036 & 0.028 & 0.024 \\
+ 8  & 0.000 & 0.121 & 0.035 & 0.040 & 0.057 & 0.037 \\
+10  & 0.118 & 0.000 & 0.039 & 0.039 & 0.051 & 0.040 \\
+12  & 0.142 & 0.000 & 0.047 & 0.044 & 0.062 & 0.059 \\
+15  & 1.336 & 0.250 & 0.445 & 0.083 & 0.179 & 0.075 \\
+18  & 5.202 & 0.000 & 1.734 & 0.000 & 0.398 & 0.017 \\
+22  & 6.237 & 5.698 & 2.079 & 1.899 & 0.201 & 0.188 \\
+30  & 5.368 & 5.610 & 1.789 & 1.870 & 0.235 & 0.222 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
+\begin{table}[H]
+\centering
+\caption{Metabolic flexibility per developmental stage: reactions with nonzero max flux, and newly constrained vs newly flexible reactions in O2 relative to WT.}
+\label{stab:fva_flex}
+\begin{tabular}{ccccc}
+\toprule
+DAP & WT flexible & O2 flexible & Newly constrained in O2 & Newly flexible in O2 \\
+\midrule
+ 6  & 398 & 919 &  10 & 701 \\
+ 8  & 893 & 346 & 719 &   9 \\
+10  & 934 & 375 & 739 &  18 \\
+12  & 929 & 935 &  61 & 106 \\
+15  & 999 & 734 & 409 &  24 \\
+18  & 976 & 981 & 148 &  46 \\
+22  & 976 & 979 &  34 &  73 \\
+30  & 935 & 921 &   0 &   1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+
 
 \end{document}

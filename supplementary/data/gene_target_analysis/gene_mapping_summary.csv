@@ -1,0 +1,81 @@
+Reaction,Screen_Type,Function,Fold_Change,Gene_ID,GPR_Type,Pathway
+Exe2[K],KO,Lipid export,"46,434x",NO_GPR,none,0
+Trans2[K],KO,Lipid transport,"46,434x",NO_GPR,none,0
+cpTransport_C00007[K],KO,O2 transport (plastid-cytosol),"23,470x",NO_GPR,none,0
+"R00216[K,p]",KO,Pyruvate dehydrogenase (plastid),"16,234x",GRMZM2G085019,isozymes,Pyruvate metabolism
+"R00216[K,p]",KO,Pyruvate dehydrogenase (plastid),"16,234x",GRMZM2G085747,isozymes,Pyruvate metabolism
+"R00216[K,p]",KO,Pyruvate dehydrogenase (plastid),"16,234x",GRMZM2G122479,isozymes,Pyruvate metabolism
+"R00216[K,p]",KO,Pyruvate dehydrogenase (plastid),"16,234x",GRMZM2G404237,isozymes,Pyruvate metabolism
+"R00216[K,p]",KO,Pyruvate dehydrogenase (plastid),"16,234x",GRMZM5G886257,isozymes,Pyruvate metabolism
+"R00282[K,c]",KO,Acetyl-CoA carboxylase (cytosol),28x,GRMZM2G000236,single_gene,0
+"MR00558[K,p]",OE,Lipid biosynthesis,1.096x,NO_GPR,none,0
+"R01308[K,p]",OE,Shikimate pathway,1.096x,NO_GPR,none,"Phenylalanine, tyrosine and tryptophan metabolism"
+"R01280[K,p]",OE,Chorismate synthesis,1.096x,GRMZM2G002614,isozymes,Fatty acid metabolism
+"R01280[K,p]",OE,Chorismate synthesis,1.096x,GRMZM2G016774,isozymes,Fatty acid metabolism
+"R01280[K,p]",OE,Chorismate synthesis,1.096x,GRMZM2G059381,isozymes,Fatty acid metabolism
+"R01280[K,p]",OE,Chorismate synthesis,1.096x,GRMZM2G098596,isozymes,Fatty acid metabolism
+"R01280[K,p]",OE,Chorismate synthesis,1.096x,GRMZM2G101875,isozymes,Fatty acid metabolism
+"R01280[K,p]",OE,Chorismate synthesis,1.096x,GRMZM2G104847,isozymes,Fatty acid metabolism
+"R01280[K,p]",OE,Chorismate synthesis,1.096x,GRMZM2G117064,isozymes,Fatty acid metabolism
+"R01280[K,p]",OE,Chorismate synthesis,1.096x,GRMZM2G118286,isozymes,Fatty acid metabolism
+"R01280[K,p]",OE,Chorismate synthesis,1.096x,GRMZM2G152127,isozymes,Fatty acid metabolism
+"R01280[K,p]",OE,Chorismate synthesis,1.096x,GRMZM2G176546,isozymes,Fatty acid metabolism
+"R01280[K,p]",OE,Chorismate synthesis,1.096x,GRMZM2G339336,isozymes,Fatty acid metabolism
+"R01280[K,p]",OE,Chorismate synthesis,1.096x,GRMZM5G840955,isozymes,Fatty acid metabolism
+"R01280[K,p]",OE,Chorismate synthesis,1.096x,GRMZM5G861300,isozymes,Fatty acid metabolism
+"R00883[K,c]",OE,Phosphofructokinase,1.096x,GRMZM2G119300,isozymes,Fructose and mannose metabolism
+"R00883[K,c]",OE,Phosphofructokinase,1.096x,GRMZM2G149265,isozymes,Fructose and mannose metabolism
+"R00512[K,c]",OE,Pyruvate kinase (cytosol),1.096x,GRMZM2G067453,isozymes,Pyrimidine metabolism
+"R00512[K,c]",OE,Pyruvate kinase (cytosol),1.096x,GRMZM2G079944,isozymes,Pyrimidine metabolism
+"R00512[K,c]",OE,Pyruvate kinase (cytosol),1.096x,GRMZM2G149281,isozymes,Pyrimidine metabolism
+"R00512[K,c]",OE,Pyruvate kinase (cytosol),1.096x,GRMZM5G801436,isozymes,Pyrimidine metabolism
+"R01015[K,c]",OE,Glycolysis,1.096x,GRMZM2G002807,isozymes,Calvin-Benson-Bassham cycle
+"R01015[K,c]",OE,Glycolysis,1.096x,GRMZM2G017257,isozymes,Calvin-Benson-Bassham cycle
+"R01015[K,c]",OE,Glycolysis,1.096x,GRMZM2G017578,isozymes,Calvin-Benson-Bassham cycle
+"R01015[K,c]",OE,Glycolysis,1.096x,GRMZM2G018177,isozymes,Calvin-Benson-Bassham cycle
+"R01015[K,c]",OE,Glycolysis,1.096x,GRMZM2G023471,isozymes,Calvin-Benson-Bassham cycle
+"R01015[K,c]",OE,Glycolysis,1.096x,GRMZM2G026182,isozymes,Calvin-Benson-Bassham cycle
+"R01015[K,c]",OE,Glycolysis,1.096x,GRMZM2G030784,isozymes,Calvin-Benson-Bassham cycle
+"R01015[K,c]",OE,Glycolysis,1.096x,GRMZM2G146206,isozymes,Calvin-Benson-Bassham cycle
+"R01015[K,c]",OE,Glycolysis,1.096x,GRMZM2G305211,isozymes,Calvin-Benson-Bassham cycle
+"R01015[K,c]",OE,Glycolysis,1.096x,GRMZM2G346168,isozymes,Calvin-Benson-Bassham cycle
+"R01015[K,c]",OE,Glycolysis,1.096x,GRMZM2G370275,isozymes,Calvin-Benson-Bassham cycle
+"R01015[K,c]",OE,Glycolysis,1.096x,GRMZM2G419024,isozymes,Calvin-Benson-Bassham cycle
+"R01015[K,c]",OE,Glycolysis,1.096x,GRMZM2G435244,isozymes,Calvin-Benson-Bassham cycle
+"R01015[K,c]",OE,Glycolysis,1.096x,GRMZM2G439389,isozymes,Calvin-Benson-Bassham cycle
+"R01015[K,c]",OE,Glycolysis,1.096x,GRMZM5G852968,isozymes,Calvin-Benson-Bassham cycle
+"R00667[K,m]",OE,TCA cycle (mitochondrial),1.096x,GRMZM2G080828,isozymes,Arginine and proline metabolism
+"R00667[K,m]",OE,TCA cycle (mitochondrial),1.096x,GRMZM2G119583,isozymes,Arginine and proline metabolism
+"MR00422[K,p]",MIM,Lipid metabolism (plastid),1.096x,AC209860.3_FGP004,isozymes,0
+"MR00422[K,p]",MIM,Lipid metabolism (plastid),1.096x,GRMZM2G002656,isozymes,0
+"MR00422[K,p]",MIM,Lipid metabolism (plastid),1.096x,GRMZM2G006620,isozymes,0
+"MR00422[K,p]",MIM,Lipid metabolism (plastid),1.096x,GRMZM2G014813,isozymes,0
+"MR00422[K,p]",MIM,Lipid metabolism (plastid),1.096x,GRMZM2G068665,isozymes,0
+"MR00422[K,p]",MIM,Lipid metabolism (plastid),1.096x,GRMZM2G074454,isozymes,0
+"MR00422[K,p]",MIM,Lipid metabolism (plastid),1.096x,GRMZM2G127798,isozymes,0
+"MR00422[K,p]",MIM,Lipid metabolism (plastid),1.096x,GRMZM2G145715,isozymes,0
+"MR00422[K,p]",MIM,Lipid metabolism (plastid),1.096x,GRMZM2G153984,isozymes,0
+"MR00422[K,p]",MIM,Lipid metabolism (plastid),1.096x,GRMZM2G398473,isozymes,0
+"MR00422[K,p]",MIM,Lipid metabolism (plastid),1.096x,GRMZM2G413647,isozymes,0
+"MR00422[K,p]",MIM,Lipid metabolism (plastid),1.096x,GRMZM2G431708,isozymes,0
+"MR00422[K,p]",MIM,Lipid metabolism (plastid),1.096x,GRMZM2G440208,isozymes,0
+"MR00422[K,p]",MIM,Lipid metabolism (plastid),1.096x,GRMZM5G818186,isozymes,0
+"MR00422[K,p]",MIM,Lipid metabolism (plastid),1.096x,GRMZM5G848696,isozymes,0
+"MR00732[K,m]",MIM,Mitochondrial metabolism,1.096x,AC197672.3_FGP002,isozymes,Biotin metabolism
+"MR00732[K,m]",MIM,Mitochondrial metabolism,1.096x,GRMZM2G377341,isozymes,Biotin metabolism
+"MR00732[K,m]",MIM,Mitochondrial metabolism,1.096x,GRMZM5G858094,isozymes,Biotin metabolism
+"MR00732[K,m]",MIM,Mitochondrial metabolism,1.096x,GRMZM5G890665,isozymes,Biotin metabolism
+"R00342[K,p]",MIM,Transketolase (plastid),1.096x,GRMZM2G035767,isozymes,Pyruvate metabolism
+"R00342[K,p]",MIM,Transketolase (plastid),1.096x,GRMZM2G068455,isozymes,Pyruvate metabolism
+"R00342[K,p]",MIM,Transketolase (plastid),1.096x,GRMZM2G072744,isozymes,Pyruvate metabolism
+"R00342[K,p]",MIM,Transketolase (plastid),1.096x,GRMZM2G077415,isozymes,Pyruvate metabolism
+"R00342[K,p]",MIM,Transketolase (plastid),1.096x,GRMZM2G101290,isozymes,Pyruvate metabolism
+"R00342[K,p]",MIM,Transketolase (plastid),1.096x,GRMZM2G141289,isozymes,Pyruvate metabolism
+"R00342[K,p]",MIM,Transketolase (plastid),1.096x,GRMZM2G154595,isozymes,Pyruvate metabolism
+"R00342[K,p]",MIM,Transketolase (plastid),1.096x,GRMZM2G161245,isozymes,Pyruvate metabolism
+"R00342[K,p]",MIM,Transketolase (plastid),1.096x,GRMZM2G415359,isozymes,Pyruvate metabolism
+"R00342[K,p]",MIM,Transketolase (plastid),1.096x,GRMZM2G466833,isozymes,Pyruvate metabolism
+"R00342[K,p]",MIM,Transketolase (plastid),1.096x,GRMZM5G811212,isozymes,Pyruvate metabolism
+cpTransport_C00712[K],VER,Nicotinamide transport,1.096x,NO_GPR,none,0
+"R00451[K,p]",REF,DAP decarboxylase (lysine),N/A,GRMZM2G020446,single_gene,Lysine metabolism
+"R02292[K,p]",REF,DHDPS (lysine committed step),N/A,GRMZM2G027835,single_gene,Lysine metabolism

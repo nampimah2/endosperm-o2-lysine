@@ -1,0 +1,10 @@
+# LaTeX build artifacts
+*.aux *.log *.out *.toc *.lof *.lot *.synctex.gz *.fls *.fdb_latexmk
+# GAMS artifacts
+*.lst *.~lock*
+# OS
+.DS_Store __pycache__/ *.pyc
+# Large data files
+*.xlsx *.mat *.h5
+# Python env
+*.egg-info/ dist/ build/

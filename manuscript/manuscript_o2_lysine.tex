@@ -1,0 +1,1108 @@
+%% LaTeX manuscript
+%% Flux Balance Analysis of Opaque2 Mutant Maize Endosperm
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage{lineno}
+
+\geometry{margin=1in}
+\doublespacing
+\linenumbers
+
+%% Fig. search paths — relative to .tex file location
+\graphicspath{%
+  {analysis_results/figures/}%
+  {gene_target_analysis/figures/}%
+  {tradeoff_analysis/figures/}%
+  {flux_sum_analysis/publication_figures/}%
+  {fva_results/figures/}%
+}
+
+\title{\textbf{Genome-Scale Metabolic Modeling Reveals Temporal Metabolic Reprogramming in \textit{Opaque2} Mutant Maize Endosperm for Enhanced Lysine Production}}
+
+\author{
+Nicholas Ampimah$^{1}$,\ Mary Kelly$^{1}$,\ Niaz Chowdhury$^{2}$,\ Ramin Yadegari$^{3}$,\ Rajib Saha$^{1}$ \\[8pt]
+\small
+$^{1}$Department of Chemical and Biomolecular Engineering, University of Nebraska-Lincoln, Lincoln, NE, USA \\
+$^{2}$Pacific Northwest National Laboratory, Richland, WA, USA \\
+$^{3}$Department of Plant Science, The University of Arizona, Tucson, AZ, USA \\
+}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+%% ============================================================
+%% ABSTRACT
+%% ============================================================
+%% ============================================================
+%% SIGNIFICANCE STATEMENT (PNAS style, ≤120 words)
+%% ============================================================
+\section*{Significance}
+
+Maize endosperm is severely deficient in lysine, an essential amino acid critical to human and animal nutrition. The \textit{Opaque2} (\textit{o2}) mutation nearly doubles lysine content, but the underlying metabolic mechanisms have remained unresolved at the systems level. Using genome-scale metabolic models constrained by transcriptomic data, we show that \textit{o2} endosperm redirects carbon away from fatty acid biosynthesis toward the lysine (diaminopimelate) pathway, amplifying lysine biosynthetic flux by more than 800,000-fold during peak grain filling. Systematic gene target analysis across 3,024 reactions identifies specific maize genes whose modification recapitulates this effect in normal maize. These findings provide a rational, model-guided roadmap for engineering lysine-enriched cereals, a strategy broadly applicable to nutritional quality improvement in food crops.
+
+%% ============================================================
+%% ABSTRACT
+%% ============================================================
+\begin{abstract}
+
+The \textit{Opaque2} (\textit{o2}) mutation enhances the nutritional quality of maize (\textit{Zea mays} L.) endosperm by elevating lysine content nearly twofold, yet the systems-level metabolic mechanisms underlying this phenotype remain unresolved. Here, we apply context-specific genome-scale metabolic models (3,024 reactions, eight developmental time points) constrained by transcriptomic data to systematically compare flux distributions between wild-type (B73) and \textit{o2} mutant endosperm from 6 to 30 days after pollination (DAP). Flux balance analysis (FBA) reveals that lysine biosynthetic flux increases 862-fold at DAP 15 and exceeds $8 \times 10^{5}$-fold at DAP 22 in the \textit{o2} mutant, driven by coordinate upregulation of the entire diaminopimelate (DAP) pathway with concomitant suppression of catabolism via the saccharopine pathway (up to 53\% reduced lysine-ketoglutarate reductase capacity). Gene target analysis across all 3,024 reactions identifies the competition between fatty acid biosynthesis and the DAP pathway for plastidial pyruvate as the dominant carbon trade-off: knockout of plastidial pyruvate dehydrogenase (five isozyme genes) yields a 16,234-fold lysine enhancement in wild-type endosperm with 100\% biomass viability. Flux sum analysis demonstrates that the \textit{o2} mutant at DAP 22 massively amplifies total metabolic throughput (glycolysis 3.6-fold, TCA cycle 27.4-fold, nitrogen donors 57-fold) while sacrificing plastidial glycolysis (96\% reduction) and fatty acid precursor supply, establishing DAP 22 as a discrete metabolic switch. Flux variability analysis (FVA) confirms that the \textit{o2} mutant exploits 22\% of its latent lysine capacity at DAP 22 versus 0.003\% in wild type, a 7,300-fold difference in capacity utilization. These results establish carbon reallocation from fatty acid biosynthesis to the aspartate-family pathway as the dominant mechanism of \textit{o2} lysine enhancement and define a four-component gene-engineering strategy for lysine biofortification in cereal crops.
+
+\vspace{6pt}
+\noindent\textbf{Keywords:} \textit{Opaque2}; maize endosperm; lysine; flux balance analysis; genome-scale metabolic model; fatty acid biosynthesis; diaminopimelate pathway; biofortification; metabolic trade-offs; gene targets
+
+\end{abstract}
+
+\newpage
+
+%% ============================================================
+%% 1. INTRODUCTION
+%% ============================================================
+%% ============================================================
+%% 1. INTRODUCTION
+%% ============================================================
+\section{Introduction}
+
+Maize (\textit{Zea mays} L.) is among the world's most important cereal crops, yet its nutritional value is fundamentally constrained by amino acid deficiencies in the starchy endosperm. Wild-type maize grain is deficient in lysine and tryptophan because $\alpha$-zein storage proteins, which dominate endosperm protein accumulation, are severely depleted in these essential amino acids \citep{Shiferaw2011, Mertz1964}. For the hundreds of millions of people worldwide who rely on maize as a primary protein source, this deficiency represents a critical nutritional gap that conventional breeding and biotechnology have long sought to address \citep{Coleman2003, Wu2010}.
+
+The \textit{Opaque2} (\textit{o2}) mutation, discovered by Mertz et al.\ \citep{Mertz1964}, nearly doubles the lysine content of maize endosperm. The \textit{O2} gene encodes a bZIP transcription factor that drives $\alpha$-zein expression; in \textit{o2} homozygotes, loss of this activity reduces 22-kDa $\alpha$-zein accumulation and is compensated by increased synthesis of lysine-rich non-zein proteins \citep{Schmidt1990, Hartings1989, Habben1993}. While the transcriptional and proteomic consequences of the \textit{o2} mutation are well characterized, including suppression of zein genes and induction of chaperone and sulfur-rich storage proteins \citep{Hunter2002, Jia2013, Zhang2016}, and the systems-level metabolic reprogramming that underpins enhanced lysine accumulation remains poorly understood.
+
+Lysine is synthesized in the plastid via the diaminopimelate (DAP) pathway, branching from aspartate and competing with fatty acid biosynthesis for the shared precursor plastidial pyruvate \citep{Galili1995, Azevedo2006, Galili2002}. Catabolism occurs through the saccharopine pathway, initiated by lysine-ketoglutarate reductase (LKR), whose expression is in part regulated by O2 \citep{Kemper1999, Arruda2000}. Understanding how carbon and nitrogen are partitioned between these competing pathways across endosperm development requires a quantitative, genome-scale approach. Context-specific genome-scale metabolic models (GEMs) coupled with flux balance analysis (FBA) and flux variability analysis (FVA) provide this capability, enabling prediction of tissue- and condition-specific flux distributions across thousands of reactions simultaneously \citep{Orth2010, Feist2010, Saha2014, Mahadevan2003}.
+
+Here, we apply context-specific GEMs for wild-type (B73) and \textit{o2} mutant maize endosperm at eight developmental stages spanning grain filling (6--30 DAP) to identify the metabolic reprogramming strategies employed by the \textit{o2} mutant. We quantify metabolic trade-offs using flux sum analysis, perform systematic gene target identification across all 3,024 model reactions, and test lysine pathway flexibility using FVA. Our results establish carbon reallocation from fatty acid to lysine biosynthesis as the dominant mechanism of \textit{o2} lysine enhancement and define a specific, gene-level engineering strategy for lysine biofortification in wild-type maize.
+
+\section{Materials and Methods}
+
+\subsection{Context-Specific Genome-Scale Metabolic Models}
+
+Genome-scale metabolic models for maize endosperm were based on a curated reconstruction encompassing 3,024 reactions, approximately 3,460 metabolites, and multiple subcellular compartments including cytosol (c), plastid (p), mitochondrion (m), vacuole (v), peroxisome (x), and a boundary compartment (B) for exchange reactions. The models were formulated in the General Algebraic Modeling System (GAMS) format using the stoichiometric matrix ($S$), upper bounds ($v_{max}$), and lower bounds ($v_{min}$) as input parameters.
+
+Context-specific models were generated for two genotypes:
+\begin{itemize}
+    \item \textbf{Wild type (B73):} Eight developmental time points designated B6, B8, B10, B12, B15, B18, B22, and B30, corresponding to 6, 8, 10, 12, 15, 18, 22, and 30 DAP, respectively.
+    \item \textbf{\textit{o2} mutant:} Eight corresponding time points designated O6, O8, O10, O12, O15, O18, O22, and O30.
+\end{itemize}
+
+The stoichiometric matrix was identical across all models (11,743 non-zero entries), while reaction flux bounds were derived from transcriptomic data to reflect the context-specific enzymatic capacity at each developmental stage and genotype. Reactions with no detectable transcript evidence were assigned reduced or zero upper bounds, while reactions supported by transcriptomic data received bounds proportional to expression levels.
+
+\subsection{Flux Balance Analysis}
+
+FBA was performed by solving the following linear program for each model:
+
+\begin{align}
+    \max \quad & Z = v_{\text{Seed\_Biomass}} \\
+    \text{s.t.} \quad & \sum_{j} S_{ij} \cdot v_j = 0 \quad \forall \, i \in \text{metabolites} \\
+    & v_{min,j} \leq v_j \leq v_{max,j} \quad \forall \, j \in \text{reactions}
+\end{align}
+
+where $v_{\text{Seed\_Biomass}}$ is the flux through the seed biomass reaction, $S_{ij}$ is the stoichiometric coefficient of metabolite $i$ in reaction $j$, and $v_j$ is the flux through reaction $j$. The biomass reaction consumed 20 amino acids, sugars, nucleotides, lipids, ATP, and other cofactors with fixed stoichiometric coefficients that were identical between wild type and \textit{o2} mutant across all developmental stages. The lysine stoichiometric coefficient in the biomass equation was $-0.004194$ mmol per unit biomass flux.
+
+All models were solved using the CPLEX linear programming solver within GAMS version 24.7.4 on a Linux high-performance computing cluster. Optimal flux distributions were recorded for all 3,024 reactions in each model.
+
+\subsection{Comparative Flux Analysis}
+
+Twelve systematic analyses were performed to characterize the metabolic differences between wild-type and \textit{o2} mutant endosperm:
+
+\begin{enumerate}
+    \item \textbf{Biomass comparison:} Maximum biomass flux was compared between genotypes at each DAP, with fold changes and percent differences calculated.
+    
+    \item \textbf{Lysine pathway flux analysis:} Fluxes through 20 lysine-related reactions were tracked, including biosynthesis (R00480, R00355, R02291, R02292, R04198, R02735, R00451), degradation (R00715, R00716, R02313, R03102, R03658), transport (cpTransport\_C00047, ExB\_C00047, cpTransport\_C00449), exchange (Exchange\_C00047), and the biomass drain.
+    
+    \item \textbf{Lysine flux balance:} Net lysine production (sum of all positive contributions from $S_{ij} \cdot v_j$ for $i = $ C00047) and consumption (sum of negative contributions) were computed at each DAP.
+    
+    \item \textbf{Biomass coefficient analysis:} The stoichiometric coefficients of lysine and aspartate in the biomass reaction were compared across all models.
+    
+    \item \textbf{Amino acid biomass composition:} Stoichiometric coefficients for 20 amino acids in the biomass reaction were compared between genotypes.
+    
+    \item \textbf{Differential flux analysis:} For each of the 3,024 reactions, the flux difference ($v_{\text{O2}} - v_{\text{WT}}$) was computed at each DAP. Reactions were ranked by maximum absolute difference and classified by directional consistency.
+    
+    \item \textbf{Pathway-level flux comparison:} Total absolute flux through reactions in nine metabolic pathways (lysine biosynthesis, lysine degradation, aspartate pathway, TCA cycle, glycolysis, amino acid transport, zein storage protein metabolism, starch metabolism, and pentose phosphate pathway) was compared between genotypes.
+    
+    \item \textbf{Constraint analysis:} Differences in the expression-derived flux bounds ($v_{min}$, $v_{max}$) between wild type and \textit{o2} mutant were examined for lysine pathway reactions.
+    
+    \item \textbf{Aspartate-family competition analysis:} Biomass coefficients and branch point fluxes for the four aspartate-derived amino acids (lysine, threonine, methionine, isoleucine) were compared.
+    
+    \item \textbf{Uniquely active reactions:} Reactions carrying non-zero flux ($|v| > 10^{-10}$) in only one genotype were identified at each DAP.
+    
+    \item \textbf{Temporal flux profiles:} Developmental trajectories of key reaction fluxes were plotted for both genotypes.
+    
+    \item \textbf{Summary statistics:} The number of significantly different reactions ($|\Delta v| > 10^{-6}$) was quantified at each DAP.
+\end{enumerate}
+
+\subsection{Flux Sum Analysis and Metabolic Trade-off Quantification}
+
+To quantify the total metabolic turnover of individual metabolites and identify resource reallocation trade-offs, we performed flux sum analysis as described by \citet{Kim2012}. The flux sum ($\Phi_i$) for metabolite $i$ is defined as:
+
+\begin{equation}
+    \Phi_i = \frac{1}{2} \sum_{j} |S_{ij} \cdot v_j|
+\end{equation}
+
+which equals the total production flux (or equivalently, total consumption flux at steady state) through each metabolite, providing a measure of metabolic turnover that is complementary to individual reaction fluxes. Flux sums were computed for all 3,458 metabolites across all 16 conditions (8 DAPs $\times$ 2 genotypes) using the stoichiometric matrix and FBA-optimal flux distributions.
+
+For trade-off analysis, metabolites were classified by the direction of their flux sum change at DAP 22 (O2 $-$ WT): metabolites with increased turnover in the \textit{o2} mutant represent resources channeled \textit{toward} lysine production, while metabolites with decreased turnover represent pathways that are sacrificed (trade-offs). Carbon and nitrogen budgets were computed by aggregating flux sums of metabolites within defined pathway categories (glycolysis, TCA cycle, pyruvate node, nitrogen donors, aspartate family, lysine pathway, branched-chain amino acids, and aromatic amino acids) across cytosolic and plastidial compartments.
+
+To assess the uniqueness of the O2 DAP 22 metabolic state, each metabolite's flux sum was compared against: (a) the corresponding WT DAP 22 value, (b) the mean flux sum across all other O2 DAPs, and (c) the mean flux sum across all WT DAPs. Additionally, reaction flux bounds ($v_{min}$, $v_{max}$) were compared between WT B22 and O2 O22 to identify regulatory constraints that differ between genotypes and correlate with flux redistribution.
+
+All analyses were implemented in Python 3.9.4 with custom scripts. Figs. were generated using Matplotlib 3.x.
+
+\subsection{Rewiring Index and Carbon Allocation Metrics}
+
+To quantify the global scale of metabolic rewiring between genotypes, we computed the Rewiring Index (RI) at each developmental stage as the sum of absolute flux differences across all reactions:
+
+\begin{equation}
+    \mathrm{RI}(t) = \sum_{j=1}^{3024} |v_j^{\mathrm{O2}}(t) - v_j^{\mathrm{WT}}(t)|
+\end{equation}
+
+To quantify the carbon cost of lysine production, the carbon allocation ratio was computed as:
+
+\begin{equation}
+    \%\,C_{\mathrm{Lys}} = \frac{v_{\mathrm{R00451}} \times 6}{v_{\mathrm{glc}} \times 6} \times 100
+\end{equation}
+
+where $v_{\mathrm{R00451}}$ is DAP decarboxylase flux (moles lysine produced per time), 6 is the carbon number of lysine, and $v_{\mathrm{glc}}$ is the glucose exchange flux (moles glucose imported per time).
+
+\subsection{Flux Variability Analysis}
+
+Flux variability analysis (FVA) \citep{Mahadevan2003} solves two linear programs per reaction to determine the minimum and maximum allowable flux consistent with optimal (or near-optimal) biomass production. For each reaction $j$, FVA computes:
+
+\begin{align}
+    v_j^{\min} &= \min v_j \quad \text{s.t.} \quad S\mathbf{v} = 0,\; v_{\min} \leq \mathbf{v} \leq v_{\max},\; v_{\mathrm{bio}} \geq \gamma v_{\mathrm{bio}}^* \\
+    v_j^{\max} &= \max v_j \quad \text{(same constraints)}
+\end{align}
+
+where $\gamma = 1.0$ (100\% optimality) and $v_{\mathrm{bio}}^*$ is the FBA-optimal biomass flux. The flux range $[v_j^{\min}, v_j^{\max}]$ characterizes metabolic flexibility: reactions with narrow ranges are ``rigid'' (essential) while those with wide ranges are ``flexible'' (redundant). FVA was performed for both WT and \textit{o2} models at DAP 15 and DAP 22 to test whether lysine pathway reactions become more constrained (narrower flux ranges) in the \textit{o2} mutant. Results are discussed in the context of Hypothesis 4 (Section 4.X).
+
+\noindent\textit{Implementation:} FVA was implemented in GAMS 24.7.4 using the CPLEX solver, solving $2 \times 3024 = 6048$ LP problems per model condition (16 conditions total: 8 DAPs $\times$ 2 genotypes, $= 96,768$ LP solves). Results were exported as Excel workbooks (one sheet per DAP) and analysed in Python 3.10 using pandas 1.5.x. The flux range ratio ($\Delta_j = (v_j^{\max} - v_j^{\min})^{\mathrm{O2}} / (v_j^{\max} - v_j^{\min})^{\mathrm{WT}}$) characterises relative flexibility between genotypes; values $< 1$ indicate reduced flexibility (increased constraint) in the \textit{o2} mutant. Results are reported in Section~3.9.
+
+%% ============================================================
+%% 3. RESULTS
+%% ============================================================
+\section{Results}
+
+\subsection{1.1. Biomass Production Is Maintained Across Development}
+
+FBA of all 16 models yielded optimal biomass flux values ranging from $5.97 \times 10^{-5}$ to $1.61 \times 10^{-3}$ across genotypes and developmental stages (Supplementary Table~S1). The wild-type and \textit{o2} mutant exhibited broadly similar developmental trajectories, with biomass flux peaking at DAP 15 in the wild type ($1.60 \times 10^{-3}$) and at DAP 18 in the \textit{o2} mutant ($1.61 \times 10^{-3}$). The fold change (O2/WT) ranged from 0.34 at DAP 30 to 1.31 at DAP 18, indicating that the \textit{o2} mutant maintained comparable growth capacity during active endosperm development (DAP 6--22) but showed substantially reduced biomass flux at the senescent stage (DAP 30, $-65.9\%$). These results suggest that the metabolic reprogramming in the \textit{o2} mutant does not come at a major cost to overall biomass accumulation during the critical grain-filling period.
+
+
+% Supplementary Table S1 (tab:biomass) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S1 -- see Supplementary Data.)}
+
+
+\subsection{1.2. The \textit{o2} Mutation Activates Lysine Biosynthesis Up to $8 \times 10^{5}$-Fold}
+
+The flux through the entire DAP biosynthetic pathway, from aspartate kinase (AK, R00480) through DHDPS (R02292) to DAP decarboxylase (DAPDC, R00451), was coordinately elevated in the \textit{o2} mutant relative to wild type at most developmental stages (Fig.~\ref{fig:biosynthesis}, Supplementary Table~S2). During early development (DAP 6--10), all biosynthetic reactions showed modest but consistent increases in the \textit{o2} mutant: fold changes for DAPDC ranged from 1.02 (DAP 10) to 1.71 (DAP 8). A slight decrease was observed at DAP 12 (FC = 0.92).
+
+Strikingly, two developmental stages exhibited dramatic upregulation of the entire lysine biosynthetic pathway in the \textit{o2} mutant. At DAP 15, DAPDC flux increased from $6.73 \times 10^{-6}$ in wild type to $5.80 \times 10^{-3}$ in the \textit{o2} mutant, representing an 862-fold increase. At DAP 22, an even more dramatic shift was observed: DAPDC flux rose from $1.51 \times 10^{-6}$ (WT) to 1.251 (O2), an increase exceeding $8.3 \times 10^{5}$-fold. At DAP 30, both genotypes showed negligible biosynthetic flux, consistent with senescence.
+
+Crucially, the flux through every step of the DAP pathway was identical in magnitude within each model (R00480 = R02291 = R02292 = R04198 = R02735 = R00451), confirming tight stoichiometric coupling of the linear biosynthetic pathway and indicating that the entire pathway was coordinately activated rather than individual steps being rate-limiting.
+
+
+% Supplementary Table S2 (tab:lysine_bio) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S2 -- see Supplementary Data.)}
+
+
+\subsection{1.3. Lysine Catabolism Is Suppressed and Catabolic Capacity Is Reduced in \textit{o2}}
+
+In sharp contrast to the biosynthetic pathway, the lysine degradation pathway via LKR/SDH (saccharopine pathway) carried negligible flux in both genotypes across all developmental stages (Supplementary Table~S3). The cytosolic LKR (R00715[K,c]) showed minimal activity only at DAP 6 and DAP 8 in the \textit{o2} mutant ($1.27 \times 10^{-6}$), with zero flux in wild type. At all other time points, LKR flux was zero in both genotypes. The plastidic LKR (R00715[K,p]), the alternative LKR (R00716[K,c]), the mitochondrial degradation pathway (R03658[K,m]), and the downstream saccharopine dehydrogenase (R02313[K,c]) were similarly inactive, except for minor SDH activity at DAP 6--8 in the \textit{o2} mutant coinciding with the LKR activity.
+
+While the FBA-predicted flux through degradation reactions was negligible, the analysis of expression-derived upper bounds revealed an important distinction: the maximum allowable flux ($v_{max}$) for the LKR alternative reaction (R00716[K,c]) was consistently lower in the \textit{o2} mutant across all developmental stages (Supplementary Table~S3). The reduction was most pronounced at DAP 22 ($v_{max}$: WT = 6.36, O2 = 2.99, a 53\% reduction) and DAP 15 ($v_{max}$: WT = 3.69, O2 = 2.37, a 36\% reduction). Similarly, the aminoadipate-semialdehyde dehydrogenase (R03102) showed reduced bounds in the \textit{o2} mutant at all DAPs (reductions of 7--32\%). These tighter constraints on catabolic capacity in the \textit{o2} mutant reflect the known transcriptional downregulation of LKR under \textit{o2} control \citep{Kemper1999, Arruda2000} and indicate that even under conditions where degradation might become favorable, the \textit{o2} mutant has limited capacity to catabolize lysine.
+
+
+% Supplementary Table S3 (tab:bounds) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S3 -- see Supplementary Data.)}
+
+
+\subsection{1.4. Lysine Turnover Increases $8 \times 10^{5}$-Fold at DAP 22}
+
+To assess the total metabolic flux through the lysine node, we computed the sum of all producing and consuming reactions for lysine (C00047) across all compartments at each DAP (Supplementary Table~S4). In wild type, lysine turnover (total production) ranged from $7.4 \times 10^{-7}$ (DAP 30) to $2.0 \times 10^{-5}$ (DAP 15), reflecting the modest demand for lysine driven primarily by the biomass reaction. In the \textit{o2} mutant, total lysine production tracked closely with wild type during early development (DAP 6--12), with fold changes of 1.0--1.5$\times$.
+
+However, at DAP 15, total lysine production surged to $1.74 \times 10^{-2}$ in the \textit{o2} mutant compared to $2.02 \times 10^{-5}$ in wild type, representing an approximately 862-fold increase. At DAP 22, lysine production in the \textit{o2} mutant reached 3.75, compared to $4.53 \times 10^{-6}$ in wild type, representing an increase exceeding $8.2 \times 10^{5}$-fold. At both time points, the net lysine balance remained effectively zero ($\sim 10^{-15}$), confirming steady-state mass balance, but the total flux through the lysine node was dramatically elevated.
+
+
+% Supplementary Table S4 (tab:balance) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S4 -- see Supplementary Data.)}
+
+
+\subsection{1.5. A Lysine Overflow Reaction Is Uniquely Activated in \textit{o2} Endosperm}
+
+A notable finding was the activation of the lysine exchange reaction (Exchange\_C00047[K,L]) in the \textit{o2} mutant at DAP 15 (flux = $5.80 \times 10^{-3}$) and DAP 22 (flux = 1.251), while this reaction carried zero flux in wild type at all developmental stages except for a negligible negative flux at DAP 30 (Supplementary Table~S5). Similarly, the lysine export to the boundary compartment (ExB\_C00047[K]) and the cytosol-to-plastid transport (cpTransport\_C00047[K]) showed dramatically increased flux at DAP 15 and 22 in the \textit{o2} mutant.
+
+This activation of lysine exchange in the \textit{o2} mutant suggests that at the developmental stages with the highest biosynthetic flux, the endosperm produces far more lysine than is required for biomass synthesis—the excess is handled through an exchange/overflow mechanism. This is consistent with the observation that the lysine consumed by the biomass reaction (biomass flux $\times$ 0.004194) accounts for only a tiny fraction of total lysine produced at these time points.
+
+
+% Supplementary Table S5 (tab:exchange) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S5 -- see Supplementary Data.)}
+
+
+\subsection{1.6. The TCA Cycle and Glycolysis Are Coordinately Amplified to Supply Lysine Precursors}
+
+Pathway-level analysis revealed significant reorganization of central carbon metabolism in the \textit{o2} mutant (Supplementary Table~S6). The most affected pathways were:
+
+\textbf{TCA cycle:} Total absolute flux through TCA reactions was elevated in the \textit{o2} mutant at DAP 6 (+14.5\%), DAP 8 (+15.7\%), DAP 15 (+72.4\%), DAP 18 (+44.5\%), and most dramatically at DAP 22 (+2,163\%). The TCA cycle provides oxaloacetate (a precursor to aspartate, which feeds the DAP pathway) and 2-oxoglutarate (the co-substrate for aspartate aminotransferase), both of which are essential for lysine biosynthesis. The coordinated upregulation of the TCA cycle at DAP 15 and 22, the same time points showing maximal lysine biosynthesis, indicates a carbon flux rerouting to support enhanced amino acid production.
+
+\textbf{Glycolysis:} Glycolytic flux showed large but variable changes, with major increases at DAP 6 (+472\%), DAP 10 (+412\%), and DAP 22 (+197\%). Glycolysis provides pyruvate, which is required as a co-substrate for DHDPS (R02292), the first committed step in lysine biosynthesis. The elevated glycolytic flux at DAP 22 (total flux: WT = 5.61, O2 = 16.64) coincides with the massive upregulation of DHDPS flux at this stage.
+
+\textbf{Fatty acid/lipid metabolism:} A critical finding from the differential flux analysis is the role of fatty acid biosynthesis as the primary competing pathway for carbon with lysine biosynthesis. In the plastid, pyruvate dehydrogenase (R00216[K,p]) channels pyruvate toward acetyl-CoA for fatty acid synthesis, directly competing with DHDPS (R02292) for the same pyruvate substrate. At DAP 22, plastidial pyruvate dehydrogenase flux in the \textit{o2} mutant increased 22-fold relative to wild type (from 0.197 to 4.326), while lipid export (Exe2[K]) increased 21-fold. However, this increase represents a proportionally smaller share of the total carbon throughput compared to the $>8 \times 10^{5}$-fold increase in lysine biosynthetic flux, indicating that the \textit{o2} mutant preferentially directs the expanded carbon supply toward amino acid production. Gene target analysis (Section 3.8) confirmed that blocking carbon entry into fatty acid biosynthesis in the wild-type model produces the most dramatic increases in lysine flux, identifying the fatty acid--lysine competition for plastidial pyruvate as the central metabolic trade-off underlying the \textit{o2} lysine phenotype.
+
+\textbf{Aspartate pathway:} Total flux through the aspartate pathway (the precursor pathway for lysine) was elevated in the \textit{o2} mutant at most DAPs, with the most dramatic increases at DAP 22 (+9,280\%) and DAP 30 (+195,928\%), mirroring the lysine biosynthesis patterns.
+
+\textbf{Amino acid transport:} Total amino acid transport flux was similar between genotypes during early development but increased by 20,289\% at DAP 15 and approximately $1.95 \times 10^{7}$\% at DAP 22 in the \textit{o2} mutant, reflecting the massive lysine transport activity at these stages.
+
+\textbf{Starch metabolism and pentose phosphate pathway:} These pathways showed modest changes that generally tracked with biomass differences, suggesting they were not primary targets of the \textit{o2}-mediated reprogramming.
+
+
+% Supplementary Table S6 (tab:pathway) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S6 -- see Supplementary Data.)}
+
+
+\subsection{1.7. Biomass Composition Is Identical Between Genotypes}
+
+Analysis of the stoichiometric coefficients in the biomass reaction revealed that all 20 amino acid coefficients, as well as those for sugars, nucleotides, lipids, and cofactors, were identical between wild type and \textit{o2} mutant across all eight developmental stages (Supplementary Table~S7). The lysine coefficient was $-0.004194$ mmol/unit biomass in both genotypes at all DAPs, aspartate was $-0.045010$, threonine was $-0.008145$, methionine was $-0.001789$, and isoleucine was $-0.000933$. This confirms that all differences in lysine-related fluxes arise from flux redistribution, not from changes in the biomass equation itself, and that the models faithfully isolate the metabolic (flux) effects of the \textit{o2} mutation from compositional differences.
+
+
+% Supplementary Table S7 (tab:aa_coefficients) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S7 -- see Supplementary Data.)}
+
+
+\subsection{1.8. Genome-Wide Flux Rewiring Peaks at DAP 22}
+
+Across all 3,024 reactions, the number of significantly different reactions ($|\Delta v| > 10^{-6}$) ranged from 314 (DAP 22) to 489 (DAP 15), representing 10--16\% of the total reaction set (Supplementary Table~S9). This indicates a substantial but focused metabolic reprogramming rather than a global perturbation.
+
+To quantify the global scale of metabolic rewiring, we computed the \textit{Rewiring Index} (RI), defined as the sum of absolute flux differences across all reactions at each developmental stage:
+
+\begin{equation}
+    \mathrm{RI} = \sum_{j=1}^{3024} |v_j^{\mathrm{O2}} - v_j^{\mathrm{WT}}|
+\end{equation}
+
+The RI increased monotonically from early (DAP 6: RI = 70.5; DAP 8: 17.9) to late (DAP 22: RI = 228.1) development, with the highest value at DAP 22, confirming this as the most metabolically divergent stage between genotypes (Supplementary Table~S8). DAP 30 showed a sharp decline (RI = 39.8), consistent with convergence toward a senescent, low-flux state in both genotypes. Additionally, the carbon allocation ratio at DAP 22 demonstrates the functional significance of the rewiring: in wild type, lysine biosynthesis consumes $<0.01$\% of imported glucose carbon at all DAPs. In the \textit{o2} mutant, this fraction rises to 4.31\% at DAP 22 ($1.25 \times \text{glucose flux} / 29.05 \times 100\%$ = 4.3\%), confirming that nearly 4.3 cents of every carbon dollar imported by the endosperm at DAP 22 is directed to lysine production.
+
+
+% Supplementary Table S8 (tab:rewiring_index) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S8 -- see Supplementary Data.)}
+
+
+The top differentially active reactions (ranked by maximum absolute difference) were dominated by carbon metabolism and transport reactions (Supplementary Table~S10). The most changed reaction was R00307[K,c] (maximum $|\Delta v| = 27.2$), followed by glucose exchange/transport reactions (Exchange\_C00031, ExB\_C00031; max $|\Delta v| = 25.4$), fructose phloem import (max $|\Delta v| = 23.9$), and CO$_2$ transport (cpTransport\_C00011; max $|\Delta v| = 10.8$). Sucrose exchange (Exchange\_C00089) and the malate shuttle (cpTransport\_C00149) also showed large differences. All top reactions were classified as ``MIXED'' in directional consistency, meaning the direction of change varied across developmental stages rather than being consistently up or down.
+
+
+% Supplementary Table S9 (tab:diff_summary) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S9 -- see Supplementary Data.)}
+
+
+
+% Supplementary Table S10 (tab:top_diff) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S10 -- see Supplementary Data.)}
+
+
+\subsection{1.9. Genotype-Specific Reactions Reveal Divergent Metabolic Programs}
+
+Analysis of reactions active exclusively in one genotype revealed 38--103 reactions unique to wild type and 38--108 reactions unique to the \textit{o2} mutant at each DAP (Supplementary Table~S11). Of particular relevance to lysine metabolism:
+
+\begin{itemize}
+    \item At DAP 6 and 8, the cytosolic LKR (R00715[K,c]) and saccharopine dehydrogenase (R02313[K,c]) were uniquely active in the \textit{o2} mutant. Although these degradation reactions carried minimal flux, their exclusive activation in the \textit{o2} mutant at early stages, when lysine biosynthesis was modestly elevated, may reflect a transient catabolic response to the slightly increased lysine pool.
+    
+    \item At DAP 15 and 22, the lysine exchange reaction (Exchange\_C00047[K,L]) was uniquely active in the \textit{o2} mutant, confirming the activation of an overflow mechanism specifically when biosynthetic flux was maximal.
+    
+    \item Wild type uniquely used fructose import (Exchange\_C00095) at DAP 6, suggesting differential sugar utilization strategies between genotypes.
+\end{itemize}
+
+
+% Supplementary Table S11 (tab:unique) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S11 -- see Supplementary Data.)}
+
+
+%% ============================================================
+%% 3.X FLUX SUM AND TRADE-OFF ANALYSIS
+%% ============================================================
+\subsection{1.10. Flux Sum Analysis Quantifies the Resource Trade-offs of Lysine Enhancement}
+
+\subsubsection{1.10.1. Carbon Budget: Massive Expansion of Central Carbon Throughput at DAP 22}
+
+Flux sum analysis quantified the total metabolic turnover ($\Phi_i$) for all 3,458 metabolites across each of the 16 conditions. At DAP 22, the \textit{o2} mutant exhibited a dramatic expansion of central carbon metabolism compared to wild type (Supplementary Table~S12; Fig.~\ref{fig:carbon_nitrogen_budget}A). Glycolytic metabolite turnover increased 3.6-fold (total flux sum: WT = 11.59, O2 = 41.24), TCA cycle turnover increased 27.4-fold (WT = 1.09, O2 = 29.80), and the pyruvate node (pyruvate, acetyl-CoA, and oxaloacetate) turnover increased 8.5-fold (WT = 2.24, O2 = 19.02). Glucose import flux sum increased by 20\% (WT = 25.96, O2 = 31.24), providing increased carbon input to fuel the expanded central metabolic flux.
+
+Notably, this carbon flux expansion was specific to DAP 22 in the \textit{o2} mutant. At earlier developmental stages (DAP 6--18), TCA cycle flux sums were comparable between genotypes (1.0--3.5 in both), with glycolysis showing variable patterns. The DAP 22-specific surge in central carbon flux coincided precisely with the $>8 \times 10^{5}$-fold increase in lysine biosynthetic flux (Section 3.2), confirming that the \textit{o2} mutant massively expands its carbon throughput specifically to fuel the lysine biosynthetic machinery.
+
+
+% Supplementary Table S12 (tab:carbon_budget) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S12 -- see Supplementary Data.)}
+
+
+\subsubsection{1.10.2. Nitrogen Budget: Selective Amplification of Aspartate-Branch Nitrogen Flux}
+
+The nitrogen budget at DAP 22 revealed a striking reallocation of nitrogen resources in the \textit{o2} mutant (Supplementary Table~S13; Fig.~\ref{fig:carbon_nitrogen_budget}B). The flux sum of nitrogen donors (glutamate and glutamine) increased 57-fold (WT = 0.14, O2 = 8.03), reflecting massively increased transamination activity. The aspartate family flux sum (encompassing aspartate, asparagine, homoserine, threonine, methionine, and lysine) increased 111-fold (WT = 0.07, O2 = 7.81), while the lysine-specific pathway flux sum increased 165-fold (WT = 0.07, O2 = 11.56).
+
+The aromatic amino acid pathway, which was entirely inactive in wild type at DAP 22 ($\Phi = 0$), was activated in the \textit{o2} mutant ($\Phi = 2.85$), indicating additional metabolic diversification. In contrast, other amino acid pathways (alanine, serine, glycine, cysteine, histidine) showed minimal changes, and polyamine metabolism remained inactive in both genotypes. These data demonstrate that the \textit{o2} mutant selectively amplifies nitrogen flux through the aspartate/lysine branch of amino acid metabolism while maintaining baseline flux through most other amino acid pathways.
+
+
+% Supplementary Table S13 (tab:nitrogen_budget) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S13 -- see Supplementary Data.)}
+
+
+\subsubsection{1.10.3. Trade-off Identification: Fatty Acid and Plastidial Glycolytic Fluxes Are Sacrificed}
+
+Of the 3,327 non-currency metabolites (excluding H$_2$O, H$^+$, O$_2$, CO$_2$, and boundary compartment species) at DAP 22, 181 showed increased flux sum in the \textit{o2} mutant (resources gained), 277 showed decreased flux sum (trade-offs), and 2,869 were unchanged ($|\Delta\Phi| < 10^{-8}$). The metabolites with the largest increases were concentrated in central carbon and amino acid metabolism: malate (cytosol: +5.60; 45-fold), pyruvate (plastid: +5.24; 28-fold), oxaloacetate (cytosol: +4.01; 22-fold), aspartate (cytosol: +3.99; 58-fold), glutamate (cytosol: +3.99; 58-fold), and 2-oxoglutarate (cytosol: +3.99; 58-fold) (Fig.~\ref{fig:tradeoff_waterfall}).
+
+The metabolites with the largest \textit{decreases}, representing resources sacrificed for lysine production, were (Supplementary Table~S14): (1) fructose (boundary: $-7.72$), reflecting redirected sugar utilization; (2) D-glucose-6-phosphate (C00092, cytosol: $-1.29$), indicating reduced flux through the glucose-6-phosphate node; (3) pyrophosphate (PPi, cytosol: $-1.20$) and AMP (cytosol: $-1.19$), reflecting shifts in nucleotide/energy metabolism; (4) plastidial glycolytic intermediates (DHAP: $-0.13$; GAP: $-0.13$; 1,3-bisP-glycerate: $-0.12$), with turnover declining by 96\%, indicating near-complete shutdown of plastidial glycolysis; and (5) fatty acid biosynthesis intermediates (palmitoyl-CoA C00249, palmitate C00154, acyl-carrier protein C04036; all $\sim -0.01$), confirming reduced lipid biosynthetic activity.
+
+
+% Supplementary Table S14 (tab:tradeoffs) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S14 -- see Supplementary Data.)}
+
+
+\subsubsection{1.10.4. Amino Acid Flux Sum Competition}
+
+Detailed analysis of amino acid flux sums across all 16 conditions (Fig.~\ref{fig:amino_acid_heatmap}) revealed a striking specificity in the \textit{o2} metabolic reprogramming at DAP 22. Among the 20 proteinogenic amino acids, the largest increases in flux sum were observed for: aspartate (cytosol: +3.99), glutamate (cytosol: +3.99; plastid: +3.90), phenylalanine (cytosol and plastid: +1.42 each), lysine (cytosol and plastid: +1.25 each), and plastidial aspartate, aspartate-4-semialdehyde, dihydrodipicolinate, and \textit{meso}-DAP (+1.25 each).
+
+By contrast, the competing aspartate-family amino acids showed negligible decreases: threonine (cytosol: $-3 \times 10^{-6}$), methionine ($-4 \times 10^{-6}$), and asparagine ($-5 \times 10^{-7}$) (Fig.~\ref{fig:aspartate_competition}). This indicates that the \textit{o2} mutant does not sacrifice competing amino acid production to fuel lysine; rather, it expands the total aspartate pool sufficiently to support both increased lysine production and maintenance of competing branches. The massive increase in aspartate turnover (58-fold) dwarfs the small biosynthetic demands of threonine and methionine, enabling the entire aspartate-family flux to increase without trade-offs among branch products.
+
+\subsubsection{1.10.5. Regulatory Basis: Bound Differences Underlie Flux Redistribution at DAP 22}
+
+Comparison of expression-derived flux bounds between WT B22 and O2 O22 revealed 1,163 reactions with different bounds (38\% of total), of which 117 had actual flux differences in the optimal FBA solution (Supplementary Table~S15). The reaction with the largest flux impact was malate dehydrogenase R00801[K,c], whose wider bounds in the \textit{o2} mutant ($v_{max}$: WT = 10.86, O2 = 15.42) enabled a flux increase from 0.30 to 7.39 ($\Delta = +7.09$), providing the oxaloacetate that feeds the aspartate aminotransferase and ultimately the DAP pathway. Other key flux-impacting bound changes included: cytosolic aspartate aminotransferase R00342[K,c] ($\Delta v = -4.32$, producing aspartate for lysine biosynthesis); cytosolic enolase R01512[K,c] ($\Delta v = -4.26$) and phosphoglyceromutase R01518[K,c] ($\Delta v = -4.15$), enhancing glycolytic throughput; and plastidial malate dehydrogenase R00216[K,p] ($\Delta v = +4.13$), feeding carbon into the plastidial TCA cycle and amino acid biosynthesis.
+
+Among lysine-specific reactions, aspartate kinase R00480[K,p] had wider bounds in the \textit{o2} mutant at some DAPs but its flux increased from $2 \times 10^{-6}$ to 1.25 ($\Delta = +1.25$), and DAP aminotransferase R01213[K,p] showed an equally large increase ($\Delta = +1.40$). These regulatory (bound) changes propagate through the stoichiometric network to redirect carbon and nitrogen flux toward lysine production.
+
+
+% Supplementary Table S15 (tab:bound_impacts) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S15 -- see Supplementary Data.)}
+
+
+\subsubsection{1.10.6. DAP 22 Is a Discrete Metabolic Switch Across All 16 Conditions}
+
+To assess whether the metabolic state at O2 DAP 22 represents a gradual trend or a discrete switch, we compared flux sums for key metabolites across all 16 conditions (Fig.~\ref{fig:temporal_profiles}; Fig.~\ref{fig:difference_heatmap}). For lysine (cytosol), the flux sum was $<0.001$ in all conditions except O2 DAP 22, where it reached 1.25, a value unique among all 16 conditions. Similarly, cytosolic aspartate flux sum was 0.07--0.29 across 15 conditions but jumped to 4.06 at O2 DAP 22; cytosolic oxaloacetate was 0.10--0.76 across 15 conditions but reached 4.20 at O2 DAP 22; and cytosolic malate was 0.02--1.19 across 15 conditions but surged to 5.72 at O2 DAP 22.
+
+The O2 DAP 22 values exceeded the mean of all other O2 conditions by: +5.24 for malate, +3.94 for OAA, +3.92 for aspartate, +3.88 for glutamate, and +1.25 for lysine (Fig.~\ref{fig:o2_dap22_uniqueness}). This confirms that O2 DAP 22 is not part of a continuous developmental trend but represents a \textit{discrete metabolic switch}: a single developmental time point at which the \textit{o2} regulatory program triggers massive carbon and nitrogen reallocation toward lysine biosynthesis.
+
+%% ============================================================
+%% 3.8 GENE TARGET IDENTIFICATION
+%% ============================================================
+\subsection{1.11. Gene Target Analysis Identifies Fatty Acid Biosynthesis as the Primary Carbon Competitor}
+
+\subsubsection{1.11.1. Rationale: Reverse-Engineering the \textit{o2} Strategy}
+
+Having established that the \textit{o2} mutation orchestrates a multi-pathway metabolic reprogramming to achieve enhanced lysine accumulation (Sections 3.1--3.7), we next sought to identify specific reactions (and by extension, their encoding genes) that, when modified in the wild-type background, would recapitulate the lysine-enhancing metabolic phenotype. We focused on the B18 (18 DAP) wild-type model as the primary engineering chassis. Although the \textit{o2} mutant achieves its most dramatic lysine phenotype at DAP 22 ($>8 \times 10^{5}$-fold increase in lysine biosynthetic flux; Section 3.2), B18 was the only developmental time point for which the FBA perturbation screening pipeline yielded feasible solver solutions across all 3,024 single-reaction knockouts and overexpressions. The engineering targets identified at B18 are expected to be relevant across the grain-filling window (DAP 15--22), though the magnitude of lysine enhancement at DAP 22, where the carbon competition between fatty acid and lysine biosynthesis is most pronounced, may be substantially greater than the values reported here.
+
+Four complementary computational screening approaches were employed (Fig.~\ref{fig:target_overview}):
+\begin{enumerate}
+    \item \textbf{Single-reaction knockout screen:} Each reaction was individually deleted (flux bounds set to zero) and the model re-optimized for biomass, with lysine biosynthetic flux (R00451, DAP decarboxylase) recorded.
+    \item \textbf{Single-reaction overexpression screen:} Each reaction's $v_{max}$ was doubled and the model re-optimized.
+    \item \textbf{o2-bound mimicry screen:} For reactions where the \textit{o2} model had different bounds than wild type, the o2-specific bounds were applied individually to the WT model.
+    \item \textbf{Combination target screen:} Top hits from each individual screen were tested in pairwise combinations.
+\end{enumerate}
+
+Targets were ranked by a composite score integrating the number of screens identifying each reaction, the consistency across developmental time points, and the maximum fold change in R00451 flux achieved.
+
+\subsubsection{1.11.2. High-Impact Knockout Targets: Fatty Acid Biosynthesis Entry Points}
+
+The knockout screen identified reactions whose deletion produced dramatic increases in lysine biosynthetic flux while maintaining 100\% biomass viability. To ensure experimental tractability, we focused exclusively on reactions with gene-protein-reaction (GPR) associations in the genome-scale model, i.e., reactions with known encoding genes (Supplementary Table~S16; Fig.~\ref{fig:screening_results}A):
+
+
+% Supplementary Table S16 (tab:ko_targets) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S16 -- see Supplementary Data.)}
+
+
+The top gene-associated knockout target, R00216[K,p] (plastidial pyruvate dehydrogenase complex), produced a 16,234-fold increase in R00451 flux when deleted. This enzyme is encoded by five isozyme genes: \textit{GRMZM2G085019}, \textit{GRMZM2G085747}, \textit{GRMZM2G122479}, \textit{GRMZM2G404237}, and \textit{GRMZM5G886257}. In the plastid, pyruvate dehydrogenase converts pyruvate to acetyl-CoA for fatty acid biosynthesis. Blocking this reaction forces plastidial pyruvate to be channeled toward condensation with aspartate-semialdehyde via DHDPS (R02292), the committed step of lysine biosynthesis. Because the GPR rule specifies an ``or'' relationship (isozymes), all five genes would need to be simultaneously knocked out via CRISPR-Cas9 multiplexing to fully eliminate reaction flux.
+
+The second target, R00282[K,c] (cytosolic acetyl-CoA carboxylase), is the most experimentally tractable: it is encoded by a single gene (\textit{GRMZM2G000236}) and its knockout produces a 28-fold lysine increase with full biomass retention. This enzyme catalyzes the first committed step of fatty acid synthesis in the cytosol; its elimination directly blocks carbon entry into the lipid biosynthetic pathway.
+
+Both knockout targets converge on a single mechanistic theme: \textit{blocking carbon entry into fatty acid biosynthesis}, at the plastidial level (pyruvate $\rightarrow$ acetyl-CoA via R00216) and the cytosolic level (acetyl-CoA $\rightarrow$ malonyl-CoA via R00282), redirects carbon toward the lysine biosynthetic DAP pathway.
+
+\subsubsection{1.11.3. Overexpression Targets: Modest but Robust Lysine Enhancement}
+
+The overexpression screen (2$\times$ $v_{max}$) identified 32 reactions whose upregulation increased R00451 flux, all producing a consistent $\sim$1.10-fold (9.6\%) enhancement at 18 DAP (Supplementary Table~S17; Fig.~\ref{fig:screening_results}B). No individual overexpression target approached the dramatic effects of the knockout targets, consistent with the principle that the wild-type metabolic network already operates near its lysine-producing capacity under the given constraints, and that increasing enzyme capacity alone provides incremental improvement.
+
+
+% Supplementary Table S17 (tab:oe_targets) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S17 -- see Supplementary Data.)}
+
+
+Notably, the gene-associated overexpression targets converge on two metabolic themes: (1) \textbf{enhanced carbon supply} through upregulation of glycolysis (phosphofructokinase R00883 / \textit{GRMZM2G119300}; pyruvate kinase R00512 / \textit{GRMZM2G067453}; GAPDH R01015 / \textit{GRMZM2G002807}) and the TCA cycle (R00667 / \textit{GRMZM2G080828}), and (2) \textbf{enhanced aromatic amino acid/chorismate pathway activity} (R01280 / \textit{GRMZM2G002614}). The chorismate synthase target is significant because the shikimate pathway competes with the DAP pathway for the common precursor erythrose-4-phosphate; overexpressing this reaction may alleviate competition for carbon at the branch point entering the plastidial biosynthetic network. Since all overexpression targets encode isozymes (``or'' GPR relationships), overexpressing any single gene within each group is sufficient.
+
+\subsubsection{1.11.4. \textit{o2}-Bound Mimicry: Direct Translation of Mutant Constraints}
+
+Three reactions were identified whose \textit{o2}-specific flux bounds, when applied to the wild-type model, increased lysine biosynthetic flux (Supplementary Table~S18; Fig.~\ref{fig:screening_results}C):
+
+
+% Supplementary Table S18 (tab:mim_targets) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S18 -- see Supplementary Data.)}
+
+
+The transketolase reaction R00342[K,p] is particularly noteworthy: its $v_{max}$ in the \textit{o2} mutant is 102\% higher than in wild type, reflecting substantially increased transcript levels. Transketolase is a key enzyme in the Calvin cycle and pentose phosphate pathway; its upregulation increases the pool size of erythrose-4-phosphate and sedoheptulose-7-phosphate, enhancing flux through the shikimate/aromatic amino acid pathway and indirectly supporting the DAP pathway. The lipid metabolism target MR00422[K,p] shows a 14.2\% reduction in the \textit{o2} mutant, consistent with the broader theme of reduced lipid biosynthetic capacity enabling carbon reallocation toward amino acid production.
+
+\subsubsection{1.11.5. Synergistic Combination Strategies}
+
+Pairwise combinations of the top individual targets revealed powerful synergistic effects, with the best combinations achieving fold changes comparable to the full \textit{o2} metabolic state (Supplementary Table~S19; Fig.~\ref{fig:combo_targets}):
+
+
+% Supplementary Table S19 (tab:combos) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S19 -- see Supplementary Data.)}
+
+
+The combination analyses demonstrate that \textbf{blocking carbon entry into fatty acid biosynthesis is the primary driver of lysine enhancement}. The most effective gene-targeted strategies uniformly involve knocking out plastidial pyruvate dehydrogenase (R00216, encoded by \textit{GRMZM2G085019} and paralogs), combined with either enhanced carbon supply (OE of R01280 / chorismate synthase or R00883 / phosphofructokinase) or direct mimicry of \textit{o2}-specific constraints (MIM of MR00422 / lipid metabolism). Combining both knockout targets (R00216 + R00282) produces the maximal effect (16,234-fold) by simultaneously blocking plastidial and cytosolic routes of fatty acid synthesis.
+
+A key finding is that the combination of any two high-impact knockouts with the overexpression or mimicry targets does not exceed the fold change of R00216 knockout alone, indicating that pyruvate dehydrogenase blockade is the rate-determining intervention. The supplementary overexpression and mimicry targets provide robustness by ensuring the redirected carbon is captured by the DAP pathway rather than alternative routes.
+
+\subsubsection{1.11.6. Target Verification and Pathway Mechanism}
+
+Of the gene-associated targets identified across all screens, the transketolase mimicry target R00342[K,p] (\textit{GRMZM2G035767} and 10 isozyme paralogs; FC = 1.096) was verified to independently increase R00451 flux while maintaining $\geq$95\% biomass (Fig.~\ref{fig:verification}). The remaining targets showed no change in R00451 when verified by strict single-perturbation re-simulation, indicating that their effects depend on alternative optimal solutions and may require combinatorial genetic implementation to achieve the predicted phenotype. This low verification rate (typical of FBA-based target identification in underdetermined metabolic networks) underscores the importance of the combinatorial strategy: while individual perturbations may be rerouted by the network, simultaneous blockade of fatty acid synthesis entry points combined with overexpression of lysine pathway enzymes constrains the solution space toward the desired phenotype.
+
+\subsubsection{1.11.7. The Unified Mechanism: Carbon Reallocation from Fatty Acid to Lysine Biosynthesis}
+
+The convergent picture from all four screening approaches reveals a clear mechanistic narrative (Fig.~\ref{fig:strategy_diagram}): the \textit{o2} mutation increases lysine production primarily by \textbf{reallocating carbon from fatty acid biosynthesis to the aspartate-family amino acid pathway}. This is achieved through:
+
+\begin{enumerate}
+    \item \textbf{Reduced fatty acid pathway activity:} The loss of $\alpha$-zein storage proteins (which are lipid-body-associated) reduces demand for fatty acid biosynthesis, freeing plastidial acetyl-CoA and pyruvate for alternative metabolic fates. The gene targets for recapitulating this effect are plastidial pyruvate dehydrogenase (\textit{GRMZM2G085019} and four paralogs; R00216[K,p]) and cytosolic acetyl-CoA carboxylase (\textit{GRMZM2G000236}; R00282[K,c]).
+    
+    \item \textbf{Carbon redirection to the DAP pathway:} Pyruvate (released from fatty acid synthesis blockade) is redirected toward DHDPS (\textit{GRMZM2G027835}; R02292), which condenses pyruvate with aspartate-semialdehyde in the first committed step of lysine biosynthesis.
+    
+    \item \textbf{Enhanced TCA cycle and glycolytic flux:} Upregulated central carbon metabolism (+2,163\% TCA at DAP 22; +197\% glycolysis) provides both the oxaloacetate (for aspartate supply) and pyruvate (for DHDPS) required by the amplified DAP pathway. The corresponding gene targets are TCA cycle enzyme R00667 (\textit{GRMZM2G080828}), phosphofructokinase R00883 (\textit{GRMZM2G119300}), and pyruvate kinase R00512 (\textit{GRMZM2G067453}).
+    
+    \item \textbf{Increased transketolase activity:} The 102\% higher $v_{max}$ for R00342[K,p] in the \textit{o2} mutant (encoded by \textit{GRMZM2G035767} and 10 isozyme paralogs) enhances pentose phosphate pathway flux, generating additional erythrose-4-phosphate for the shikimate pathway and relieving competition with aromatic amino acid biosynthesis.
+    
+    \item \textbf{Lysine overflow export:} When biosynthetic flux far exceeds demand (as at DAP 22), excess free lysine is exported via Exchange\_C00047, preventing toxic accumulation.
+\end{enumerate}
+
+The engineering implication is direct: \textit{the most effective genetically tractable intervention for increasing lysine in wild-type maize is to knock out plastidial pyruvate dehydrogenase} (\textit{GRMZM2G085019} and four paralogs), which achieves a 16,234-fold increase in R00451 flux at 18 DAP (the only time point with feasible perturbation solutions) with no biomass penalty. Given that the \textit{o2} mutant achieves its peak lysine phenotype at DAP 22 ($>8 \times 10^{5}$-fold increase; Section 3.2), the effects of these engineering interventions are expected to be even more dramatic during the DAP 22 developmental window when the carbon competition between fatty acid and lysine biosynthesis is most intense. For a single-gene approach, knockout of cytosolic acetyl-CoA carboxylase (\textit{GRMZM2G000236}) achieves a 28-fold increase. These findings provide specific, experimentally actionable gene targets for lysine biofortification.
+
+\subsubsection{1.11.8. Gene-Protein-Reaction Mapping: From Reactions to Actionable Gene Targets}
+
+To translate the reaction-level targets into experimentally actionable gene targets, we mapped each target reaction to its associated maize genes using the gene-protein-reaction (GPR) rules from the genome-scale model (Supplementary Table~S20). All targets presented here have verified GPR associations, encompassing 74 unique maize gene identifiers across 12 reactions.
+
+
+% Supplementary Table S20 (tab:gene_targets) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S20 -- see Supplementary Data.)}
+
+
+The highest-impact target \textit{with a direct gene association} is plastidial pyruvate dehydrogenase (R00216[K,p]), encoded by five isozyme genes. Because the GPR rule specifies an ``or'' relationship (any single gene product is sufficient to catalyze the reaction), all five genes (\textit{GRMZM2G085019}, \textit{GRMZM2G085747}, \textit{GRMZM2G122479}, \textit{GRMZM2G404237}, and \textit{GRMZM5G886257}) would need to be simultaneously knocked out via CRISPR-Cas9 multiplexing to fully eliminate reaction flux, yielding a predicted 16,234-fold increase in lysine biosynthetic flux.
+
+Cytosolic acetyl-CoA carboxylase (R00282[K,c]) is the most tractable target: it is encoded by a single gene (\textit{GRMZM2G000236}), and its knockout produces a 28-fold lysine increase with full biomass retention. This enzyme catalyzes the first committed step of fatty acid synthesis, and its elimination directly blocks carbon entry into the lipid biosynthetic pathway in the cytosol.
+
+For overexpression targets, phosphofructokinase (\textit{GRMZM2G119300} or \textit{GRMZM2G149265}) and pyruvate kinase (\textit{GRMZM2G067453}, \textit{GRMZM2G079944}, \textit{GRMZM2G149281}, or \textit{GRMZM5G801436}) represent rate-limiting glycolytic enzymes whose upregulation would enhance the pyruvate supply needed for both the TCA cycle (oxaloacetate $\rightarrow$ aspartate) and the DAP pathway (pyruvate + aspartate-semialdehyde $\rightarrow$ DHDP). Since these are isozymes, overexpressing any single gene is sufficient.
+
+The transketolase target (R00342[K,p], e.g., \textit{GRMZM2G035767}) is particularly significant because the \textit{o2} mutant naturally upregulates this gene by 102\%. This represents a direct, experimentally observable gene expression change in the mutant that can be replicated in wild type through promoter engineering or transgene overexpression.
+
+The reference lysine biosynthetic genes, DHDPS (\textit{GRMZM2G027835}) and DAP decarboxylase (\textit{GRMZM2G020446}), are included as essential co-targets: DHDPS overexpression ensures that redirected carbon flux entering the plastid is captured by the lysine pathway rather than alternative metabolic routes.
+
+%% ============================================================
+%% 3.9 FLUX VARIABILITY ANALYSIS
+%% ============================================================
+\subsection{1.12. FVA Reveals 7,300-Fold Greater Capacity Utilization in \textit{o2} at DAP 22}
+
+To characterize the range of optimal solutions and assess metabolic flexibility, we performed FVA for all 3,024 model reactions at each DAP and genotype, computing the minimum and maximum flux achievable while maintaining 100\% optimal biomass production.
+
+\subsubsection{1.12.1. Latent Lysine Production Capacity}
+
+A key finding of the FVA is that both genotypes possess substantial \textit{latent} capacity for lysine biosynthesis that is not fully exploited in the FBA-optimal solution. At DAP 22, the maximum achievable DAP decarboxylase flux (R00451[K,p]) is 6.24 (WT) and 5.70 (O2) mmol g DW$^{-1}$ h$^{-1}$ (Supplementary Table~S21). However, the actual FBA-predicted flux at this DAP is only $2 \times 10^{-6}$ in WT and 1.25 in O2. This means that WT uses only 0.003\% of its latent lysine capacity, while the \textit{o2} mutant uses 22\% of its maximum potential. These results confirm that the network architecture is inherently permissive for high lysine flux: the observed activation in the \textit{o2} mutant reflects the removal of metabolic competition (principally from fatty acid biosynthesis) rather than the introduction of new enzymatic capacity.
+
+
+% Supplementary Table S21 (tab:fva_lys) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S21 -- see Supplementary Data.)}
+
+
+\subsubsection{1.12.2. Stage-Specific Flexibility and the DAP 18 Paradox}
+
+A notable finding is the near-complete absence of lysine biosynthetic capacity in the \textit{o2} mutant at DAP 18: R00451 max\_rate = $1 \times 10^{-5}$ versus 5.20 in WT. Similarly, lysine transport capacity at O2 DAP 18 is $2 \times 10^{-5}$ versus 1.73 in WT. This ``DAP 18 paradox,'' in which WT has greater latent lysine capacity than O2 despite producing less lysine in the FBA solution, suggests that the \textit{o2} model at DAP 18 is highly constrained by specific transcriptome-derived bounds that lock the network into a configuration incompatible with high lysine flux. The FBA-predicted R00451 flux in O2 at DAP 18 is only $7 \times 10^{-6}$, consistent with the FVA upper bound of $1 \times 10^{-5}$: the network can barely produce any lysine at this stage, explaining why the DAP 22 expression window is the critical one for engineering.
+
+\subsubsection{1.12.3. Metabolic Flexibility Index}
+
+Across the genome-scale network, the number of reactions with nonzero max\_rate (metabolically flexible reactions) was broadly similar between genotypes at most developmental stages ($|$O2$-$WT$|$ $<$ 50 at DAP 12, 22, and 30). The most striking divergence occurred at DAP 6 (O2: 919 flexible vs WT: 398) and DAP 8 (O2: 346 vs WT: 893), indicating an early developmental stage where the two genotypes differ substantially in how many reactions can carry flux at optimal biomass. The \textit{o2} mutant at DAP 6 has 701 reactions that newly gain flexibility (flux range opens up) compared to WT, while WT at DAP 8 has 719 reactions that are newly flexible compared to O2 (Supplementary Table~S22). These early-stage differences likely reflect the different stoichiometric composition of zein versus non-zein protein biomass targets in the two genotypes.
+
+
+% Supplementary Table S22 (tab:fva_flex) -- moved to supplementary_tables.tex
+\noindent\textit{(Supplementary Table~S22 -- see Supplementary Data.)}
+
+
+%% ============================================================
+%% 4. DISCUSSION
+%% ============================================================
+\section{Discussion}
+
+\textit{o2} mutant maize endosperm achieves nearly twofold higher lysine content through a multi-component metabolic reprogramming that our genome-scale flux analysis now resolves quantitatively. The dominant mechanism is reallocation of plastidial carbon from fatty acid biosynthesis to the diaminopimelate (DAP) lysine pathway, a conclusion supported convergently by gene target analysis, flux sum trade-off analysis, and the near-complete shutdown of plastidial glycolysis (96\% reduction) observed at DAP 22. Below we discuss how each component of this reprogramming contributes to the \textit{o2} phenotype and what our findings imply for lysine biofortification.
+
+\subsection{Carbon Reallocation from Fatty Acid Biosynthesis Drives Lysine Enhancement}
+
+The most important finding of this study is the identification of the fatty acid--DAP pathway carbon competition as the central metabolic trade-off in \textit{o2} endosperm. Gene target screening across all 3,024 model reactions demonstrated that blocking carbon entry into fatty acid biosynthesis, via knockout of plastidial pyruvate dehydrogenase or cytosolic acetyl-CoA carboxylase, produces the largest lysine enhancements (16,234- and 28-fold, respectively) in the wild-type model. This substantially exceeds the effect of upregulating DHDPS alone, indicating that addressing the upstream carbon allocation bottleneck is more effective than enhancing pathway enzymes directly \citep{Frizzi2008}.
+
+The \textit{o2} mutation achieves the equivalent effect indirectly: by suppressing $\alpha$-zein gene expression, it reduces the demand for zein-associated lipid body formation, effectively relieving the competitive pressure that fatty acid synthesis exerts on plastidial pyruvate. This interpretation is consistent with the flux sum analysis result that plastidial glycolysis drops 96\% at DAP 22 in the \textit{o2} mutant while TCA cycle turnover expands 27.4-fold, together indicating a wholesale shift from lipid-oriented plastidial metabolism toward oxidative carbon processing in support of amino acid biosynthesis.
+
+The coordinate 862-fold (DAP 15) and $>8 \times 10^{5}$-fold (DAP 22) upregulation of the entire DAP pathway confirms stoichiometric coupling across all enzymatic steps, from aspartate kinase through DAP decarboxylase. No single step is rate-limiting; rather, the entire pathway is activated as a unit, consistent with the known transcriptional coregulation of DAP pathway genes during grain filling \citep{Galili2002, Azevedo2006}. Similarly, the 57-fold expansion of nitrogen donor (glutamate + glutamine) turnover indicates that both carbon and nitrogen channeling are simultaneously coordinated toward the aspartate/lysine branch at DAP 22, a finding that extends earlier biochemical studies into a genome-scale, quantitative framework.
+
+\subsection{Suppressed Catabolism Amplifies Net Lysine Accumulation}
+
+The \textit{o2} mutation is known to reduce LKR expression \citep{Kemper1999, Arruda2000}; our constraint analysis provides genome-scale quantitative evidence for this effect. Expression-derived upper bounds for lysine degradation reactions are consistently lower in the \textit{o2} mutant (up to 53\% reduction for LKR at DAP 22), indicating diminished catabolic capacity even beyond what the FBA-optimal solution utilizes. This dual strategy of simultaneously amplifying biosynthesis and suppressing degradation is the same logic exploited by classical DHDPS overexpression + LKR RNAi combinations that have yielded larger lysine gains than either intervention alone \citep{Houmard2007}. Our results confirm this strategy at the genome-scale level and further show that it is the natural mechanism employed by \textit{o2} itself.
+
+\subsection{FVA Reveals Capacity Utilization, Not Network Constraint, as the Distinguishing Feature}
+
+Flux variability analysis reframes the mechanistic understanding of the \textit{o2} phenotype. At DAP 22, both wild-type and \textit{o2} networks harbor nearly equivalent maximum lysine production capacity (R00451 FVA max: WT = 6.24, O2 = 5.70). The \textit{o2} mutant is not inherently more constrained toward lysine; rather, it activates 22\% of its latent capacity versus 0.003\% in wild type, representing a 7,300-fold difference in capacity utilization driven by regulatory changes in expression-derived bounds. This distinction matters for engineering: it implies that releasing transcriptional repression of DAP pathway genes, rather than architectural changes to the metabolic network, is the key lever for enhancing lysine production. The DAP 18 paradox, in which FVA shows near-zero lysine capacity in \textit{o2} despite moderate biosynthetic flux at other stages, highlights the complexity of developmental regulation and underscores that peak interventions should be timed to the DAP 15--22 window.
+
+\subsection{DAP 22 as a Discrete Metabolic Switch}
+
+The temporal specificity of the \textit{o2} reprogramming is striking. Early development (DAP 6--12) shows only modest genotypic differences, while DAP 15 and DAP 22 exhibit dramatic metabolic shifts. The rewiring index (RI) peaks at DAP 22 (RI = 228.1), confirming that the global metabolic divergence between genotypes is maximal at this stage. DAP 22 is qualitatively distinct from all other developmental conditions across both genotypes, representing a discrete metabolic switch rather than a gradual trend. This likely reflects the developmental program of the endosperm, where DAP 22 coincides with the peak of active grain filling and storage compound deposition \citep{Lending1989, Woo2001}. The practical implication for biofortification is that transgene expression promoters with activity peaking at DAP 15--22 will be most effective.
+
+\subsection{A Gene-Engineering Roadmap for Lysine Biofortification}
+
+Our systematic gene target analysis, encompassing knockout, overexpression, \textit{o2}-bound mimicry, and combination strategies across all 3,024 model reactions, yields a specific, GPR-verified gene engineering plan. Unlike prior approaches that focused narrowly on DHDPS overexpression and LKR suppression \citep{Frizzi2008, Houmard2007}, this plan directly addresses the carbon allocation trade-off: (1) knockout of cytosolic acetyl-CoA carboxylase (\textit{GRMZM2G000236}; 28-fold enhancement, full biomass viability) as the most tractable single-gene intervention; (2) multiplexed knockout of plastidial pyruvate dehydrogenase isozymes (\textit{GRMZM2G085019} and four paralogs; 16,234-fold) for maximum impact; (3) overexpression of DHDPS (\textit{GRMZM2G027835}) to capture redirected carbon; and (4) overexpression of glycolytic (phosphofructokinase \textit{GRMZM2G119300}; pyruvate kinase \textit{GRMZM2G067453}) and plastidial transketolase (\textit{GRMZM2G035767}) genes to sustain precursor supply. This four-component strategy, deployed under endosperm-specific DAP 15--22 promoters, mirrors the natural metabolic reprogramming of \textit{o2} at the gene level and provides an actionable framework for engineering lysine biofortification in wild-type maize and, by extension, in other cereal crops.
+
+\section{Conclusions}
+
+This study presents the first temporally resolved, genome-scale flux comparison of wild-type and \textit{o2} mutant maize endosperm. We show that the \textit{o2} mutation induces a multi-layered metabolic reprogramming whose central mechanism is carbon reallocation from fatty acid biosynthesis to the lysine (DAP) pathway. This reprogramming involves: (i) coordinate upregulation of the entire DAP biosynthetic pathway, reaching $>8 \times 10^{5}$-fold at DAP 22; (ii) competition between fatty acid biosynthesis and the DAP pathway for plastidial pyruvate, with gene target analysis demonstrating that blocking fatty acid synthesis entry points yields the largest lysine enhancements; (iii) up to 53\% reduced catabolism capacity via the saccharopine pathway; (iv) 27.4-fold amplification of TCA cycle turnover and 3.6-fold expansion of glycolytic throughput to supply carbon precursors; and (v) activation of a lysine overflow exchange reaction exclusively at DAP 15 and 22.
+
+Flux variability analysis further establishes that the \textit{o2} mutant exploits its latent lysine capacity 7,300-fold more efficiently than wild type at DAP 22, not through architectural network changes, but through enhanced capacity utilization driven by transcriptional regulation.
+
+Gene target identification across all 3,024 model reactions identifies two experimentally tractable maize genes as primary targets: cytosolic acetyl-CoA carboxylase (\textit{GRMZM2G000236}; 28-fold lysine enhancement) and plastidial pyruvate dehydrogenase (\textit{GRMZM2G085019} and four paralogs; 16,234-fold). Combined with DHDPS overexpression, glycolytic enhancement, and LKR suppression, these define a four-component, gene-level biofortification strategy. Together, these findings provide a comprehensive, flux-resolved understanding of \textit{o2} lysine enhancement and a model-guided framework for improving nutritional quality in cereal crops.
+
+\section*{Acknowledgments}
+
+The authors acknowledge the use of high-performance computing resources for GAMS model optimization and thank the members of the Systems and Synthetic Biology laboratory for helpful discussions.
+
+%% ============================================================
+%% DATA AVAILABILITY
+%% ============================================================
+\section*{Data Availability}
+
+All GAMS model files, FBA results, analysis scripts, and processed data files are available at [repository to be determined upon publication]. The analysis pipeline consists of seven scripts: \texttt{run\_all\_models.sh} (GAMS batch execution), \texttt{analyze\_o2\_vs\_wt.py} (comprehensive comparative analysis generating 12 analysis outputs), \texttt{generate\_figures.py} (visualization of 9 publication-quality figures), \texttt{identify\_lysine\_targets.py} (gene target identification analysis generating 9 target analysis outputs), \texttt{generate\_target\_figures.py} (visualization of 10 gene target figures), \texttt{flux\_sum\_analysis.py} (flux sum computation and metabolite-level analysis generating 7 analysis outputs), and \texttt{tradeoff\_analysis.py} (carbon/nitrogen budget, trade-off identification, and cross-condition comparison generating 9 analysis outputs and 10 figures).
+
+%% ============================================================
+%% REFERENCES
+%% ============================================================
+\bibliographystyle{unsrtnat}
+
+\begin{thebibliography}{99}
+
+\bibitem[Arruda et~al., 2000]{Arruda2000}
+Arruda, P., Kemper, E.L., Papes, F., and Leite, A. (2000).
+\newblock Regulation of lysine catabolism in higher plants.
+\newblock \textit{Trends in Plant Science}, 5(8):324--330.
+
+\bibitem[Azevedo et~al., 2003]{Azevedo2003}
+Azevedo, R.A., Damerval, C., Landry, J., Lea, P.J., Bellato, C.M., Meinhardt, L.W., Le~Guilloux, M., Delhaye, S., Toro, A.A., Gaziola, S.A., and Berthomieu, P. (2003).
+\newblock Regulation of maize lysine metabolism and endosperm protein synthesis by \textit{opaque} and \textit{floury} mutations.
+\newblock \textit{European Journal of Biochemistry}, 270(24):4898--4908.
+
+\bibitem[Azevedo et~al., 2006]{Azevedo2006}
+Azevedo, R.A., Lancien, M., and Lea, P.J. (2006).
+\newblock The aspartic acid metabolic pathway, an exciting and essential pathway in plants.
+\newblock \textit{Amino Acids}, 30(2):143--162.
+
+\bibitem[Coleman and Larkins, 1999]{Coleman2003}
+Coleman, C.E. and Larkins, B.A. (1999).
+\newblock The prolamins of maize.
+\newblock In: \textit{Seed Proteins}, Shewry, P.R. and Casey, R. (eds.), pp.\ 109--139. Kluwer Academic Publishers.
+
+\bibitem[Feist and Palsson, 2010]{Feist2010}
+Feist, A.M. and Palsson, B.O. (2010).
+\newblock The biomass objective function.
+\newblock \textit{Current Opinion in Microbiology}, 13(3):344--349.
+
+\bibitem[Frizzi et~al., 2008]{Frizzi2008}
+Frizzi, A., Huang, S., Eyber, L.A., Jander, G., and Galili, G. (2008).
+\newblock Modifying lysine biosynthesis and catabolism in corn with a single bifunctional expression/silencing transgene cassette.
+\newblock \textit{Plant Biotechnology Journal}, 6(1):13--21.
+
+\bibitem[Galili, 1995]{Galili1995}
+Galili, G. (1995).
+\newblock Regulation of lysine and threonine synthesis.
+\newblock \textit{The Plant Cell}, 7(7):899--906.
+
+\bibitem[Galili, 2002]{Galili2002}
+Galili, G. (2002).
+\newblock New insights into the regulation and functional significance of lysine metabolism in plants.
+\newblock \textit{Annual Review of Plant Biology}, 53:27--43.
+
+\bibitem[Habben et~al., 1993]{Habben1993}
+Habben, J.E., Kirleis, A.W., and Larkins, B.A. (1993).
+\newblock The origin of lysine-containing proteins in \textit{opaque-2} maize endosperm.
+\newblock \textit{Plant Molecular Biology}, 23(4):825--838.
+
+\bibitem[Hartings et~al., 1989]{Hartings1989}
+Hartings, H., Maddaloni, M., Lazzaroni, N., Di~Fonzo, N., Motto, M., Salamini, F., and Thompson, R. (1989).
+\newblock The \textit{O2} gene which regulates zein deposition in maize endosperm encodes a protein with structural homologies to transcriptional activators.
+\newblock \textit{The EMBO Journal}, 8(10):2795--2801.
+
+\bibitem[Houmard et~al., 2007]{Houmard2007}
+Houmard, N.M., Mainville, J.L., Bonin, C.P., Huang, S., Luethy, M.H., and Malvar, T.M. (2007).
+\newblock High-lysine corn generated by endosperm-specific suppression of lysine catabolism using RNAi.
+\newblock \textit{Plant Biotechnology Journal}, 5(5):605--614.
+
+\bibitem[Huang et~al., 2006]{Huang2006}
+Huang, S., Frizzi, A., Florida, C.A., Kruger, D.E., and Luethy, M.H. (2006).
+\newblock High lysine and high tryptophan transgenic maize resulting from the reduction of both 19- and 22-kD $\alpha$-zeins.
+\newblock \textit{Plant Molecular Biology}, 61(3):525--535.
+
+\bibitem[Hunter et~al., 2002]{Hunter2002}
+Hunter, B.G., Beatty, M.K., Singletary, G.W., Hamaker, B.R., Dilkes, B.P., Larkins, B.A., and Jung, R. (2002).
+\newblock Maize \textit{opaque} endosperm mutations create extensive changes in patterns of gene expression.
+\newblock \textit{The Plant Cell}, 14(10):2591--2612.
+
+\bibitem[Jia et~al., 2013]{Jia2013}
+Jia, M., Wu, H., Clay, K.L., Jung, R., Larkins, B.A., and Gibbon, B.C. (2013).
+\newblock Identification and characterization of lysine-rich proteins and starch biosynthesis genes in the \textit{opaque2} mutant by transcriptional and proteomic analysis.
+\newblock \textit{BMC Plant Biology}, 13:60.
+
+\bibitem[Kemper et~al., 1999]{Kemper1999}
+Kemper, E.L., Neto, G.C., Papes, F., Moraes, K.C., Leite, A., and Arruda, P. (1999).
+\newblock The role of \textit{opaque2} in the control of lysine-degrading activities in developing maize endosperm.
+\newblock \textit{The Plant Cell}, 11(10):1981--1994.
+
+\bibitem[Kim et~al., 2012]{Kim2012}
+Kim, P.J., Lee, D.Y., Kim, T.Y., Lee, K.H., Jeong, H., Lee, S.Y., and Park, S. (2012).
+\newblock Metabolite essentiality elucidates robustness of \textit{Escherichia coli} metabolism.
+\newblock \textit{Proceedings of the National Academy of Sciences}, 104(34):13638--13642.
+
+\bibitem[Lending and Larkins, 1989]{Lending1989}
+Lending, C.R. and Larkins, B.A. (1989).
+\newblock Changes in the zein composition of protein bodies during maize endosperm development.
+\newblock \textit{The Plant Cell}, 1(10):1011--1023.
+
+\bibitem[Mahadevan and Schilling, 2003]{Mahadevan2003}
+Mahadevan, R. and Schilling, C.~H. (2003).
+The effects of alternate optimal solutions in constraint-based genome-scale metabolic models.
+\textit{Metabolic Engineering}, 5(4):264--276.
+
+\bibitem[Mertz et~al., 1964]{Mertz1964}
+Mertz, E.T., Bates, L.S., and Nelson, O.E. (1964).
+\newblock Mutant gene that changes protein composition and increases lysine content of maize endosperm.
+\newblock \textit{Science}, 145(3629):279--280.
+
+\bibitem[Orth et~al., 2010]{Orth2010}
+Orth, J.D., Thiele, I., and Palsson, B.O. (2010).
+\newblock What is flux balance analysis?
+\newblock \textit{Nature Biotechnology}, 28(3):245--248.
+
+\bibitem[Robaina-Est\'{e}vez et~al., 2017]{Robaina2017}
+Robaina-Est\'{e}vez, S., Nikoloski, Z. (2017).
+\newblock Context-specific metabolic model extraction based on regularized least squares optimization.
+\newblock \textit{PLOS ONE}, 12(1):e0169293.
+
+\bibitem[Saha et~al., 2011]{Saha2011}
+Saha, R., Suthers, P.F., and Maranas, C.D. (2011).
+\newblock Zea mays iRS1563: A comprehensive genome-scale metabolic reconstruction of maize metabolism.
+\newblock \textit{PLOS ONE}, 6(7):e21784.
+
+\bibitem[Saha et~al., 2014]{Saha2014}
+Saha, R., Chowdhury, A., and Maranas, C.D. (2014).
+\newblock Recent advances in the reconstruction of metabolic models and integration of omics data.
+\newblock \textit{Current Opinion in Biotechnology}, 29:39--45.
+
+\bibitem[Schmidt et~al., 1990]{Schmidt1990}
+Schmidt, R.J., Burr, F.A., Aukerman, M.J., and Burr, B. (1990).
+\newblock Maize regulatory gene \textit{opaque-2} encodes a protein with a ``leucine-zipper'' motif that binds to zein DNA.
+\newblock \textit{Proceedings of the National Academy of Sciences}, 87(1):46--50.
+
+\bibitem[Seaver et~al., 2015]{Seaver2015}
+Seaver, S.M.D., Bradbury, L.M.T., Frelin, O., Zarecki, R., Ruppin, E., Hanson, A.D., and Henry, C.S. (2015).
+\newblock Improved evidence-based genome-scale metabolic models for maize leaf, embryo, and endosperm.
+\newblock \textit{Frontiers in Plant Science}, 6:142.
+
+\bibitem[Shaw and Cheung, 2019]{Shaw2019}
+Shaw, R. and Cheung, C.Y.M. (2019).
+\newblock A mass and charge balanced metabolic model of \textit{Setaria viridis} to study the theoretical yield of multi-gene bioengineering.
+\newblock \textit{The Plant Journal}, 97(6):1116--1132.
+
+\bibitem[Shiferaw et~al., 2011]{Shiferaw2011}
+Shiferaw, B., Prasanna, B.M., Hellin, J., and B\"{a}nziger, M. (2011).
+\newblock Crops that feed the world 6. Past successes and future challenges to the role played by maize in global food security.
+\newblock \textit{Food Security}, 3(3):307--327.
+
+\bibitem[Woo et~al., 2001]{Woo2001}
+Woo, Y.M., Hu, D.W.N., Larkins, B.A., and Jung, R. (2001).
+\newblock Genomics analysis of genes expressed in maize endosperm identifies novel seed proteins and clarifies patterns of zein gene expression.
+\newblock \textit{The Plant Cell}, 13(10):2297--2317.
+
+\bibitem[Wu and Messing, 2010]{Wu2010}
+Wu, Y. and Messing, J. (2010).
+\newblock RNA interference-mediated change in protein body morphology and seed opacity through loss of different zein proteins.
+\newblock \textit{Plant Physiology}, 153(1):337--347.
+
+\bibitem[Zhang et~al., 2016]{Zhang2016}
+Zhang, Z., Zheng, X., Yang, J., Messing, J., and Wu, Y. (2016).
+\newblock Maize endosperm-specific transcription factors O2 and PBF network the regulation of protein and starch synthesis.
+\newblock \textit{Proceedings of the National Academy of Sciences}, 113(39):10842--10847.
+
+\end{thebibliography}
+
+%% ============================================================
+%% AUTHOR CONTRIBUTIONS
+%% ============================================================
+\section*{Author Contributions}
+
+\textbf{N.A.:} Conceptualization, Methodology, Software, Formal analysis, Investigation, Data curation, Visualization, Writing -- original draft.
+\textbf{M.K.:} Resources, Data curation, Writing -- review \& editing.
+\textbf{N.C.:} Methodology, Software, Writing -- review \& editing.
+\textbf{Y.R.:} Resources, Data curation, Writing -- review \& editing.
+\textbf{R.S.:} Conceptualization, Supervision, Project administration, Funding acquisition, Writing -- review \& editing.
+
+%% ============================================================
+%% CONFLICT OF INTEREST
+%% ============================================================
+\section*{Conflict of Interest}
+
+The authors declare that the research was conducted in the absence of any commercial or financial relationships that could be construed as a potential conflict of interest.
+
+%% ============================================================
+%% FUNDING
+%% ============================================================
+\section*{Funding}
+
+[Add grant numbers and funding agencies here before submission.]
+
+%% ============================================================
+%% FIGURES
+%% ============================================================
+\newpage
+\section*{Figs.}
+
+%% ----- Fig. 1 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig1_Biomass_Comparison}
+\caption{Seed biomass comparison between wild-type (blue) and \textit{o2} mutant (red) maize endosperm across eight developmental stages. (A) Absolute biomass flux over development. (B) Fold change (O2/WT) at each DAP; dashed line indicates no change (FC = 1).}
+\label{fig:biomass}
+\end{figure}
+
+%% ----- Fig. 2 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig2_Lysine_Biosynthesis}
+\caption{Lysine biosynthesis flux (R00451, DAP decarboxylase) across development. (A) Full-scale comparison showing the dramatic increase in the \textit{o2} mutant at DAP 15 and 22. (B) Zoomed view of early development (DAP 6--12) showing modest but consistent upregulation. (C) log10 fold change across all stages.}
+\label{fig:biosynthesis}
+\end{figure}
+
+%% ----- Fig. 3 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig3_Pathway_Entry_Exit}
+\caption{Coupling of pathway entry and exit fluxes. (A) DHDPS (R02292) flux over development. (B) Scatter plot of DHDPS vs.\ DAP decarboxylase flux, confirming 1:1 stoichiometric coupling in both genotypes.}
+\label{fig:pathway_entry}
+\end{figure}
+
+%% ----- Fig. 4 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig4_Lysine_Degradation_Exchange}
+\caption{Lysine degradation and exchange. (A) LKR cytosolic flux (R00715[K,c]) showing minimal activity. (B) Lysine exchange reaction flux, showing activation uniquely in the \textit{o2} mutant at DAP 15 and 22.}
+\label{fig:degradation}
+\end{figure}
+
+%% ----- Fig. 5 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig5_Pathway_Heatmap}
+\caption{Pathway-level flux change heatmap. Percent change (O2 vs.\ WT) for nine metabolic pathways across eight developmental stages, clipped at $\pm 200$\% for visualization. Values exceeding $\pm 1000$\% are annotated with ``K'' suffix.}
+\label{fig:pathway_heatmap}
+\end{figure}
+
+%% ----- Fig. 6 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig6_Lysine_Flux_Balance}
+\caption{Lysine flux balance. (A) Lysine production and consumption (absolute) in both genotypes. (B) log10 ratio of O2/WT lysine production, highlighting the massive turnover increase at DAP 15 and 22.}
+\label{fig:flux_balance}
+\end{figure}
+
+%% ----- Fig. 7 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig7_Bound_Differences}
+\caption{Expression-derived flux bound ($v_{max}$) differences for key lysine degradation reactions: (A) LKR alternative (R00716[K,c]), (B) DAP decarboxylase (R00451[K,p]), (C) DHDPS (R02292[K,p]), (D) Aminoadipate-semialdehyde DH (R03102[K,c]).}
+\label{fig:bounds}
+\end{figure}
+
+%% ----- Fig. 8 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig8_Summary_Panel}
+\caption{Comprehensive summary panel integrating all key analyses: biomass, biosynthesis, degradation, production flux, exchange, DHDPS entry flux, and pathway-level heatmap.}
+\label{fig:summary}
+\end{figure}
+
+%% ----- Fig. 9 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig9_Uniquely_Active_Reactions}
+\caption{Uniquely active reactions in each genotype at each developmental stage, showing the number of reactions carrying non-zero flux exclusively in wild type (blue) or \textit{o2} mutant (red).}
+\label{fig:unique}
+\end{figure}
+
+%% ----- Fig. 10 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig1_O2_vs_WT_Lysine_Context}
+\caption{Overview of \textit{o2} versus wild-type lysine metabolism context for gene target identification. (A) R00451 flux (DAP decarboxylase) across all developmental stages showing dramatic upregulation in the \textit{o2} mutant at DAP 15 and 22. (B) Log$_{10}$ fold change of lysine flux across development. (C) Seed biomass comparison. (D) Pathway-level flux comparison at DAP 22 showing coordinated upregulation of lysine biosynthesis, aspartate pathway, TCA cycle, and glycolysis.}
+\label{fig:target_overview}
+\end{figure}
+
+%% ----- Fig. 11 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig2_Master_Target_Ranking}
+\caption{Master target ranking from gene identification analysis. (A) Top 20 gene targets ranked by composite score, colored by screen type (red: knockout; blue: overexpression; light blue: \textit{o2} mimicry; gold: multi-screen hit). (B) Corresponding log$_{10}$ fold change in lysine flux for each target.}
+\label{fig:master_ranking}
+\end{figure}
+
+%% ----- Fig. 12 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig3_Screening_Results}
+\caption{Screening results across three complementary approaches. (A) Top knockout targets ranked by fold change increase in R00451 flux (restricted to reactions with GPR associations), with biomass retention percentages annotated. (B) Top overexpression targets (2$\times$ $v_{max}$) with GPR associations. (C) \textit{o2}-bound mimicry targets showing the $v_{max}$ change percentage from wild type to \textit{o2}.}
+\label{fig:screening_results}
+\end{figure}
+
+%% ----- Fig. 13 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig4_Combination_Targets}
+\caption{Combination target analysis (restricted to reactions with GPR associations). (A) Top synergistic combination strategies ranked by fold change, colored by biomass viability (green: $>$50\% biomass retained; red: non-viable). (B) Scatter plot of combination targets showing the trade-off between lysine flux enhancement and biomass retention.}
+\label{fig:combo_targets}
+\end{figure}
+
+%% ----- Fig. 14 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig5_Verification_Summary}
+\caption{Verification of predicted gene-associated targets. (A) The confirmed target that independently increases R00451 flux with $\geq$95\% biomass retention: R00342 (transketolase; \textit{GRMZM2G035767}). (B) Pie chart showing overall verification rate among gene-associated targets.}
+\label{fig:verification}
+\end{figure}
+
+%% ----- Fig. 15 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig6_DAP22_Metabolic_Reprogramming}
+\caption{Metabolic reprogramming at DAP 22: top differentially active reactions between \textit{o2} and wild type. (A) Top 20 reactions upregulated in \textit{o2} at DAP 22. (B) Top 20 reactions downregulated in \textit{o2} at DAP 22.}
+\label{fig:dap22_reprog}
+\end{figure}
+
+%% ----- Fig. 16 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig7_Lysine_Pathway_Heatmap}
+\caption{Lysine biosynthetic pathway heatmap across development. (A) Absolute flux through each pathway step in wild type. (B) Log$_{10}$ fold change (\textit{o2}/WT) showing coordinate pathway activation with the most dramatic changes at DAP 15 and 22.}
+\label{fig:lys_heatmap}
+\end{figure}
+
+%% ----- Fig. 17 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig8_Engineering_Strategy_Diagram}
+\caption{Engineering strategy diagram summarizing the gene-level targets derived from \textit{o2} metabolic reprogramming. Tier 1: High-impact knockouts (plastidial pyruvate dehydrogenase \textit{GRMZM2G085019}; cytosolic acetyl-CoA carboxylase \textit{GRMZM2G000236}). Tier 2: Overexpression targets (glycolysis, chorismate pathway, TCA cycle). Tier 3: Synergistic combinations with \textit{o2}-bound mimicry targets achieving the highest lysine enhancement with biomass viability.}
+\label{fig:strategy_diagram}
+\end{figure}
+
+%% ----- Fig. 18 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig9_Temporal_Dynamics}
+\caption{Temporal dynamics of key target reaction fluxes in wild-type versus \textit{o2} across all eight developmental stages, showing the developmental window where the largest flux divergences occur (DAP 15--22).}
+\label{fig:temporal_targets}
+\end{figure}
+
+%% ----- Fig. 19 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig10_Screen_Type_Distribution}
+\caption{Distribution of gene targets by screening approach. (A) Pie chart showing the proportion of targets identified by each screen type. (B) Box plot of fold change distributions by screen type. (C) Scatter plot of composite score versus fold change, showing that knockout targets achieve the highest impact.}
+\label{fig:screen_dist}
+\end{figure}
+
+%% ----- Fig. 20 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig1_carbon_nitrogen_budget}
+\caption{Carbon and nitrogen budget comparison at DAP 22 between wild type and \textit{o2} mutant. (A) Carbon flux sums for central carbon pathway categories: glucose import, glycolysis, TCA cycle, and pyruvate node. (B) Nitrogen flux sums for nitrogen-containing pathway categories: nitrogen donors, aspartate family, lysine pathway, branched-chain amino acids, aromatic amino acids, and other amino acids.}
+\label{fig:carbon_nitrogen_budget}
+\end{figure}
+
+%% ----- Fig. 21 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig2_tradeoff_waterfall}
+\caption{Waterfall plot of metabolite flux sum changes at DAP 22 (\textit{o2} $-$ WT). Top panel: metabolites with the largest increases in turnover (resources gained), dominated by TCA cycle intermediates (malate, pyruvate, OAA) and amino acid biosynthesis precursors (aspartate, glutamate, 2-oxoglutarate). Bottom panel: metabolites with the largest decreases (trade-offs), led by fructose, glucose-6-phosphate, PPi, AMP, and plastidial glycolytic intermediates.}
+\label{fig:tradeoff_waterfall}
+\end{figure}
+
+%% ----- Fig. 22 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig3_amino_acid_heatmap}
+\caption{Amino acid flux sum heatmap across all 16 conditions (8 DAPs $\times$ 2 genotypes). Rows represent individual amino acids (cytosolic and plastidial compartments); columns represent conditions ordered by genotype and DAP. Color intensity reflects log$_{10}$-transformed flux sum, highlighting the dramatic and specific increase in aspartate-family and aromatic amino acid turnover at O2 DAP 22.}
+\label{fig:amino_acid_heatmap}
+\end{figure}
+
+%% ----- Fig. 23 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig4_temporal_profiles}
+\caption{Temporal profiles of key metabolite flux sums across development. Each panel shows one metabolite's flux sum in wild type (blue) and \textit{o2} (red) across 8 DAPs. Metabolites include cytosolic lysine, aspartate, oxaloacetate, malate, glutamate, 2-oxoglutarate, pyruvate (plastid), and phenylalanine, demonstrating the discrete metabolic switch at O2 DAP 22.}
+\label{fig:temporal_profiles}
+\end{figure}
+
+%% ----- Fig. 24 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig5_budget_temporal}
+\caption{Temporal profiles of pathway-level carbon and nitrogen budgets. (A) Carbon budget components (glycolysis, TCA cycle, pyruvate node, glucose import) across all 16 conditions. (B) Nitrogen budget components (nitrogen donors, aspartate family, lysine pathway, aromatic amino acids) across all 16 conditions. The O2 DAP 22 spike is evident in both panels.}
+\label{fig:budget_temporal}
+\end{figure}
+
+%% ----- Fig. 25 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig6_o2_dap22_uniqueness}
+\caption{Uniqueness analysis of O2 DAP 22 metabolic state. For each key metabolite, the O2 DAP 22 flux sum is compared against: the WT DAP 22 value (difference vs.\ WT), the mean of all other O2 conditions (difference vs.\ O2 mean), and the mean of all WT conditions (difference vs.\ WT mean). All three comparisons show large positive deviations for TCA cycle and amino acid biosynthesis metabolites, confirming the metabolic outlier status of O2 DAP 22.}
+\label{fig:o2_dap22_uniqueness}
+\end{figure}
+
+%% ----- Fig. 26 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig7_lysine_reaction_profiles}
+\caption{Lysine pathway reaction flux profiles across all 16 conditions. Each panel shows one of the 34 lysine-related reactions (biosynthesis, degradation, import, export) plotted over development for both genotypes, revealing coordinate activation of the entire biosynthetic branch specifically at O2 DAP 15 and 22.}
+\label{fig:lysine_profiles}
+\end{figure}
+
+%% ----- Fig. 27 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig8_pathway_stacked_area}
+\caption{Stacked area plot of pathway-level flux sums across development for WT (left) and \textit{o2} mutant (right). Each colored layer represents one pathway category, illustrating shifts in the relative contributions of central carbon, amino acid, and lipid metabolism throughout endosperm development.}
+\label{fig:stacked_area}
+\end{figure}
+
+%% ----- Fig. 28 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig9_difference_heatmap}
+\caption{Heatmap of flux sum differences (\textit{o2} $-$ WT) across all metabolites and developmental stages. Rows represent metabolites (clustered by pathway); columns represent DAPs. The heatmap reveals that the metabolic divergence between genotypes is concentrated at DAP 22, with minor differences at other stages.}
+\label{fig:difference_heatmap}
+\end{figure}
+
+%% ----- Fig. 29 -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Fig10_aspartate_family_competition}
+\caption{Aspartate-family amino acid competition analysis. Flux sums for aspartate, threonine, methionine, asparagine, homoserine, and lysine across all 16 conditions, demonstrating that lysine flux sum increases by 165-fold at O2 DAP 22 without any reduction in competing aspartate-family branch products---the total aspartate pool expands sufficiently to support all branches simultaneously.}
+\label{fig:aspartate_competition}
+\end{figure}
+
+%% ----- Fig. 30: FVA max lysine flux -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{FigFVA1_max_lysine_flux}
+\caption{FVA maximum achievable lysine biosynthesis flux. Left: maximum achievable R00451[K,p] (DAP decarboxylase) flux across developmental stages in WT and \textit{o2} mutant at 100\% optimal biomass. Right: maximum achievable lysine transport (cmTransport\_C00047) flux. At DAP 22, both genotypes have large latent capacity (WT: 6.24, O2: 5.70 mmol g DW$^{-1}$ h$^{-1}$), but WT uses only 0.003\% while O2 uses 22\% of this capacity. At DAP 18, WT retains large potential (5.20) while O2 is nearly constrained to zero ($10^{-5}$).}
+\label{fig:fva_max_lys}
+\end{figure}
+
+%% ----- Fig. 31: FVA active reactions -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{FigFVA2_active_reactions}
+\caption{Metabolic flexibility per developmental stage: number of reactions with nonzero maximum flux (max\_rate $> 10^{-6}$) in WT and \textit{o2} mutant. At most DAPs, flexibility is similar between genotypes. The largest divergences occur at DAP 6 (O2: 919 vs WT: 398) and DAP 8 (WT: 893 vs O2: 346), reflecting early developmental differences in zein vs non-zein biomass stoichiometry.}
+\label{fig:fva_active}
+\end{figure}
+
+%% ----- Fig. 32: FVA constrained vs flexible -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{FigFVA3_constrained_flexible}
+\caption{Reactions that gain or lose flux flexibility in the \textit{o2} mutant relative to WT. ``Newly constrained'' = reactions with nonzero flux range in WT but zero in O2; ``Newly flexible'' = reactions locked in WT but free in O2. At DAP 6, O2 gains 701 flexible reactions; at DAP 8--10, O2 loses 719--739 reactions to constraint, reflecting a genotype-specific developmental switch.}
+\label{fig:fva_constrained}
+\end{figure}
+
+%% ----- Fig. 33: FVA lysine pathway heatmap -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{FigFVA4_lysine_pathway_heatmap}
+\caption{Flux variability analysis heatmap for key lysine pathway reactions. Each cell shows the maximum achievable flux (max\_rate) at optimal biomass for WT (left) and \textit{o2} mutant (right). The R00451[K,p] (DAP decarboxylase) row shows the massive latent capacity at DAP 22--30, while R00480[K,p] (aspartate kinase) remains near-zero in both genotypes, confirming it as a stringent constraint on the DAP pathway.}
+\label{fig:fva_heatmap}
+\end{figure}
+
+%% ----- Fig. 34: FVA LKR capacity -----
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{FigFVA5_LKR_capacity}
+\caption{FVA maximum achievable LKR (lysine $\varepsilon$-amino lyase) flux across development. Left: cytosolic LKR (R00715[K,c]); Right: plastidic LKR (R00715[K,p]). The \textit{o2} mutant consistently shows reduced maximum LKR flux at DAP 15--18, confirming reduced catabolic capacity as a key component of the elevated-lysine phenotype. At DAP 22--30, both genotypes show similar LKR maximum flux, suggesting catabolic constraint is stage-specific.}
+\label{fig:fva_lkr}
+\end{figure}
+
+%% ============================================================
+%% FIGURE LEGENDS
+%% ============================================================
+\newpage
+\section*{Fig. Legends}
+
+\textbf{Fig. 1.} Seed biomass comparison between wild-type (blue) and \textit{o2} mutant (red) maize endosperm across eight developmental stages. (A) Absolute biomass flux over development. (B) Fold change (O2/WT) at each DAP; dashed line indicates no change (FC = 1).
+
+\textbf{Fig. 2.} Lysine biosynthesis flux (R00451, DAP decarboxylase) across development. (A) Full-scale comparison showing the dramatic increase in the \textit{o2} mutant at DAP 15 and 22. (B) Zoomed view of early development (DAP 6--12) showing modest but consistent upregulation. (C) log10 fold change across all stages.
+
+\textbf{Fig. 3.} Coupling of pathway entry and exit fluxes. (A) DHDPS (R02292) flux over development. (B) Scatter plot of DHDPS vs.\ DAP decarboxylase flux, confirming 1:1 stoichiometric coupling in both genotypes.
+
+\textbf{Fig. 4.} Lysine degradation and exchange. (A) LKR cytosolic flux (R00715[K,c]) showing minimal activity. (B) Lysine exchange reaction flux, showing activation uniquely in the \textit{o2} mutant at DAP 15 and 22.
+
+\textbf{Fig. 5.} Pathway-level flux change heatmap. Percent change (O2 vs.\ WT) for nine metabolic pathways across eight developmental stages, clipped at $\pm 200$\% for visualization. Values exceeding $\pm 1000$\% are annotated with ``K'' suffix.
+
+\textbf{Fig. 6.} Lysine flux balance. (A) Lysine production and consumption (absolute) in both genotypes. (B) log10 ratio of O2/WT lysine production, highlighting the massive turnover increase at DAP 15 and 22.
+
+\textbf{Fig. 7.} Expression-derived flux bound ($v_{max}$) differences for key lysine degradation reactions: (A) LKR alternative (R00716[K,c]), (B) DAP decarboxylase (R00451[K,p]), (C) DHDPS (R02292[K,p]), (D) Aminoadipate-semialdehyde DH (R03102[K,c]).
+
+\textbf{Fig. 8.} Comprehensive summary panel integrating all key analyses: biomass, biosynthesis, degradation, production flux, exchange, DHDPS entry flux, and pathway-level heatmap.
+
+\textbf{Fig. 9.} Uniquely active reactions in each genotype at each developmental stage, showing the number of reactions carrying non-zero flux exclusively in wild type (blue) or \textit{o2} mutant (red).
+
+\textbf{Fig. 10.} Overview of \textit{o2} versus wild-type lysine metabolism context for gene target identification. (A) R00451 flux (DAP decarboxylase) across all developmental stages showing dramatic upregulation in the \textit{o2} mutant at DAP 15 and 22. (B) Log$_{10}$ fold change of lysine flux across development. (C) Seed biomass comparison. (D) Pathway-level flux comparison at DAP 22 showing coordinated upregulation of lysine biosynthesis, aspartate pathway, TCA cycle, and glycolysis.
+
+\textbf{Fig. 11.} Master target ranking from gene identification analysis. (A) Top 20 gene targets ranked by composite score, colored by screen type (red: knockout; blue: overexpression; light blue: \textit{o2} mimicry; gold: multi-screen hit). (B) Corresponding log$_{10}$ fold change in lysine flux for each target.
+
+\textbf{Fig. 12.} Screening results across three complementary approaches. (A) Top knockout targets ranked by fold change increase in R00451 flux (restricted to reactions with GPR associations), with biomass retention percentages annotated. (B) Top overexpression targets (2$\times$ $v_{max}$) with GPR associations. (C) \textit{o2}-bound mimicry targets showing the $v_{max}$ change percentage from wild type to \textit{o2}.
+
+\textbf{Fig. 13.} Combination target analysis (restricted to reactions with GPR associations). (A) Top synergistic combination strategies ranked by fold change, colored by biomass viability (green: $>$50\% biomass retained; red: non-viable). (B) Scatter plot of combination targets showing the trade-off between lysine flux enhancement and biomass retention.
+
+\textbf{Fig. 14.} Verification of predicted gene-associated targets. (A) The confirmed target that independently increases R00451 flux with $\geq$95\% biomass retention: R00342 (transketolase; \textit{GRMZM2G035767}). (B) Pie chart showing overall verification rate among gene-associated targets.
+
+\textbf{Fig. 15.} Metabolic reprogramming at DAP 22: top differentially active reactions between \textit{o2} and wild type. (A) Top 20 reactions upregulated in \textit{o2} at DAP 22. (B) Top 20 reactions downregulated in \textit{o2} at DAP 22.
+
+\textbf{Fig. 16.} Lysine biosynthetic pathway heatmap across development. (A) Absolute flux through each pathway step in wild type. (B) Log$_{10}$ fold change (\textit{o2}/WT) showing coordinate pathway activation with the most dramatic changes at DAP 15 and 22.
+
+\textbf{Fig. 17.} Engineering strategy diagram summarizing the gene-level targets derived from \textit{o2} metabolic reprogramming. Tier 1: High-impact knockouts (plastidial pyruvate dehydrogenase \textit{GRMZM2G085019}; cytosolic acetyl-CoA carboxylase \textit{GRMZM2G000236}). Tier 2: Overexpression targets (glycolysis, chorismate pathway, TCA cycle). Tier 3: Synergistic combinations with \textit{o2}-bound mimicry targets achieving the highest lysine enhancement with biomass viability.
+
+\textbf{Fig. 18.} Temporal dynamics of key target reaction fluxes in wild-type versus \textit{o2} across all eight developmental stages, showing the developmental window where the largest flux divergences occur (DAP 15--22).
+
+\textbf{Fig. 19.} Distribution of gene targets by screening approach. (A) Pie chart showing the proportion of targets identified by each screen type. (B) Box plot of fold change distributions by screen type. (C) Scatter plot of composite score versus fold change, showing that knockout targets achieve the highest impact.
+
+\textbf{Fig. 20.} Carbon and nitrogen budget comparison at DAP 22 between wild type and \textit{o2} mutant. (A) Carbon flux sums for central carbon pathway categories: glucose import, glycolysis, TCA cycle, and pyruvate node. (B) Nitrogen flux sums for nitrogen-containing pathway categories: nitrogen donors, aspartate family, lysine pathway, branched-chain amino acids, aromatic amino acids, and other amino acids. Error bars are absent as values represent single FBA-optimal solutions per condition.
+
+\textbf{Fig. 21.} Waterfall plot of metabolite flux sum changes at DAP 22 (\textit{o2} $-$ WT). Top panel: metabolites with the largest increases in turnover (resources gained), dominated by TCA cycle intermediates (malate, pyruvate, OAA) and amino acid biosynthesis precursors (aspartate, glutamate, 2-oxoglutarate). Bottom panel: metabolites with the largest decreases (trade-offs), led by fructose, glucose-6-phosphate, PPi, AMP, and plastidial glycolytic intermediates.
+
+\textbf{Fig. 22.} Amino acid flux sum heatmap across all 16 conditions (8 DAPs $\times$ 2 genotypes). Rows represent individual amino acids (cytosolic and plastidial compartments); columns represent conditions ordered by genotype and DAP. Color intensity reflects log$_{10}$-transformed flux sum, highlighting the dramatic and specific increase in aspartate-family and aromatic amino acid turnover at O2 DAP 22.
+
+\textbf{Fig. 23.} Temporal profiles of key metabolite flux sums across development. Each panel shows one metabolite's flux sum in wild type (blue) and \textit{o2} (red) across 8 DAPs. Metabolites include cytosolic lysine, aspartate, oxaloacetate, malate, glutamate, 2-oxoglutarate, pyruvate (plastid), and phenylalanine, demonstrating the discrete metabolic switch at O2 DAP 22.
+
+\textbf{Fig. 24.} Temporal profiles of pathway-level carbon and nitrogen budgets. (A) Carbon budget components (glycolysis, TCA cycle, pyruvate node, glucose import) across all 16 conditions. (B) Nitrogen budget components (nitrogen donors, aspartate family, lysine pathway, aromatic amino acids) across all 16 conditions. The O2 DAP 22 spike is evident in both panels.
+
+\textbf{Fig. 25.} Uniqueness analysis of O2 DAP 22 metabolic state. For each key metabolite, the O2 DAP 22 flux sum is compared against: the WT DAP 22 value (difference vs.\ WT), the mean of all other O2 conditions (difference vs.\ O2 mean), and the mean of all WT conditions (difference vs.\ WT mean). All three comparisons show large positive deviations for TCA cycle and amino acid biosynthesis metabolites, confirming the metabolic outlier status of O2 DAP 22.
+
+\textbf{Fig. 26.} Lysine pathway reaction flux profiles across all 16 conditions. Each panel shows one of the 34 lysine-related reactions (biosynthesis, degradation, import, export) plotted over development for both genotypes, revealing coordinate activation of the entire biosynthetic branch specifically at O2 DAP 15 and 22.
+
+\textbf{Fig. 27.} Stacked area chart of pathway-level flux sums. (A) Pathway flux sum composition in wild type across development. (B) Pathway flux sum composition in the \textit{o2} mutant across development. The dramatic expansion of TCA cycle, glycolysis, and amino acid pathway contributions at O2 DAP 22 is clearly visible.
+
+\textbf{Fig. 28.} Heatmap of flux sum differences (\textit{o2} $-$ WT) across all metabolites and developmental stages. Rows represent metabolites (clustered by pathway); columns represent DAPs. The heatmap reveals that the metabolic divergence between genotypes is concentrated at DAP 22, with minor differences at other stages.
+
+\textbf{Fig. 29.} Aspartate-family amino acid competition analysis. Flux sums for aspartate, threonine, methionine, asparagine, homoserine, and lysine across all 16 conditions, demonstrating that lysine flux sum increases by 165-fold at O2 DAP 22 without any reduction in competing aspartate-family branch products---the total aspartate pool expands sufficiently to support all branches simultaneously.
+
+\end{document}

@@ -1,0 +1,248 @@
+================================================================================
+GENE TARGET MAPPING REPORT
+Mapping metabolic model reactions to maize (Zea mays) gene IDs
+Source: endosperm_GSM.xlsx GPR rules
+================================================================================
+
+================================================================================
+SECTION A: KEY ENGINEERING TARGETS
+================================================================================
+
+─── Exe2[K] (KO) ───
+  Function:    Lipid export
+  Fold Change: 46,434x
+  GSM Match:   Exe2[K]
+  Pathway:     0
+  GPR:         No gene association (transport/exchange reaction)
+
+─── Trans2[K] (KO) ───
+  Function:    Lipid transport
+  Fold Change: 46,434x
+  GSM Match:   Trans2[K]
+  Pathway:     0
+  GPR:         No gene association (transport/exchange reaction)
+
+─── cpTransport_C00007[K] (KO) ───
+  Function:    O2 transport (plastid-cytosol)
+  Fold Change: 23,470x
+  GSM Match:   cpTransport_C00007[K]
+  Pathway:     0
+  GPR:         No gene association (transport/exchange reaction)
+
+─── R00216[K,p] (KO) ───
+  Function:    Pyruvate dehydrogenase (plastid)
+  Fold Change: 16,234x
+  GSM Match:   R00216[K,p]
+  Pathway:     Pyruvate metabolism
+  GPR Type:    isozymes
+  # Genes:     5
+  Genes:
+    - GRMZM2G085019
+    - GRMZM2G085747
+    - GRMZM2G122479
+    - GRMZM2G404237
+    - GRMZM5G886257
+
+─── R00282[K,c] (KO) ───
+  Function:    Acetyl-CoA carboxylase (cytosol)
+  Fold Change: 28x
+  GSM Match:   R00282[K,c]
+  Pathway:     0
+  GPR Type:    single_gene
+  # Genes:     1
+  Genes:
+    - GRMZM2G000236
+
+─── MR00558[K,p] (OE) ───
+  Function:    Lipid biosynthesis
+  Fold Change: 1.096x
+  GSM Match:   MR00558[K,p]
+  Pathway:     0
+  GPR:         No gene association (transport/exchange reaction)
+
+─── R01308[K,p] (OE) ───
+  Function:    Shikimate pathway
+  Fold Change: 1.096x
+  GSM Match:   R01308[K,p]
+  Pathway:     Phenylalanine, tyrosine and tryptophan metabolism
+  GPR:         No gene association (transport/exchange reaction)
+
+─── R01280[K,p] (OE) ───
+  Function:    Chorismate synthesis
+  Fold Change: 1.096x
+  GSM Match:   R01280[K,p]
+  Pathway:     Fatty acid metabolism
+  GPR Type:    isozymes
+  # Genes:     13
+  Genes:
+    - GRMZM2G002614
+    - GRMZM2G016774
+    - GRMZM2G059381
+    - GRMZM2G098596
+    - GRMZM2G101875
+    - GRMZM2G104847
+    - GRMZM2G117064
+    - GRMZM2G118286
+    - GRMZM2G152127
+    - GRMZM2G176546
+    - GRMZM2G339336
+    - GRMZM5G840955
+    - GRMZM5G861300
+
+─── R00883[K,c] (OE) ───
+  Function:    Phosphofructokinase
+  Fold Change: 1.096x
+  GSM Match:   R00883[K,c]
+  Pathway:     Fructose and mannose metabolism
+  GPR Type:    isozymes
+  # Genes:     2
+  Genes:
+    - GRMZM2G119300
+    - GRMZM2G149265
+
+─── R00512[K,c] (OE) ───
+  Function:    Pyruvate kinase (cytosol)
+  Fold Change: 1.096x
+  GSM Match:   R00512[K,c]
+  Pathway:     Pyrimidine metabolism
+  GPR Type:    isozymes
+  # Genes:     4
+  Genes:
+    - GRMZM2G067453
+    - GRMZM2G079944
+    - GRMZM2G149281
+    - GRMZM5G801436
+
+─── R01015[K,c] (OE) ───
+  Function:    Glycolysis
+  Fold Change: 1.096x
+  GSM Match:   R01015[K,c]
+  Pathway:     Calvin-Benson-Bassham cycle
+  GPR Type:    isozymes
+  # Genes:     15
+  Genes:
+    - GRMZM2G002807
+    - GRMZM2G017257
+    - GRMZM2G017578
+    - GRMZM2G018177
+    - GRMZM2G023471
+    - GRMZM2G026182
+    - GRMZM2G030784
+    - GRMZM2G146206
+    - GRMZM2G305211
+    - GRMZM2G346168
+    - GRMZM2G370275
+    - GRMZM2G419024
+    - GRMZM2G435244
+    - GRMZM2G439389
+    - GRMZM5G852968
+
+─── R00667[K,m] (OE) ───
+  Function:    TCA cycle (mitochondrial)
+  Fold Change: 1.096x
+  GSM Match:   R00667[K,m]
+  Pathway:     Arginine and proline metabolism
+  GPR Type:    isozymes
+  # Genes:     2
+  Genes:
+    - GRMZM2G080828
+    - GRMZM2G119583
+
+─── MR00422[K,p] (MIM) ───
+  Function:    Lipid metabolism (plastid)
+  Fold Change: 1.096x
+  GSM Match:   MR00422[K,p]
+  Pathway:     0
+  GPR Type:    isozymes
+  # Genes:     15
+  Genes:
+    - AC209860.3_FGP004
+    - GRMZM2G002656
+    - GRMZM2G006620
+    - GRMZM2G014813
+    - GRMZM2G068665
+    - GRMZM2G074454
+    - GRMZM2G127798
+    - GRMZM2G145715
+    - GRMZM2G153984
+    - GRMZM2G398473
+    - GRMZM2G413647
+    - GRMZM2G431708
+    - GRMZM2G440208
+    - GRMZM5G818186
+    - GRMZM5G848696
+
+─── MR00732[K,m] (MIM) ───
+  Function:    Mitochondrial metabolism
+  Fold Change: 1.096x
+  GSM Match:   MR00732[K,m]
+  Pathway:     Biotin metabolism
+  GPR Type:    isozymes
+  # Genes:     4
+  Genes:
+    - AC197672.3_FGP002
+    - GRMZM2G377341
+    - GRMZM5G858094
+    - GRMZM5G890665
+
+─── R00342[K,p] (MIM) ───
+  Function:    Transketolase (plastid)
+  Fold Change: 1.096x
+  GSM Match:   R00342[K,p]
+  Pathway:     Pyruvate metabolism
+  GPR Type:    isozymes
+  # Genes:     11
+  Genes:
+    - GRMZM2G035767
+    - GRMZM2G068455
+    - GRMZM2G072744
+    - GRMZM2G077415
+    - GRMZM2G101290
+    - GRMZM2G141289
+    - GRMZM2G154595
+    - GRMZM2G161245
+    - GRMZM2G415359
+    - GRMZM2G466833
+    - GRMZM5G811212
+
+─── cpTransport_C00712[K] (VER) ───
+  Function:    Nicotinamide transport
+  Fold Change: 1.096x
+  GSM Match:   cpTransport_C00712[K]
+  Pathway:     0
+  GPR:         No gene association (transport/exchange reaction)
+
+─── R00451[K,p] (REF) ───
+  Function:    DAP decarboxylase (lysine)
+  Fold Change: N/A
+  GSM Match:   R00451[K,p]
+  Pathway:     Lysine metabolism
+  GPR Type:    single_gene
+  # Genes:     1
+  Genes:
+    - GRMZM2G020446
+
+─── R02292[K,p] (REF) ───
+  Function:    DHDPS (lysine committed step)
+  Fold Change: N/A
+  GSM Match:   R02292[K,p]
+  Pathway:     Lysine metabolism
+  GPR Type:    single_gene
+  # Genes:     1
+  Genes:
+    - GRMZM2G027835
+
+================================================================================
+SECTION B: ALL TARGETS FROM SCREENING ANALYSIS
+================================================================================
+
+  Targets with gene associations: 10
+  Targets without GPR (transport/exchange): 12
+  Targets not found in GSM: 152
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+  Key targets with gene associations: 12/18
+  Total unique genes across all targets: 132
+  Total target reactions: 192

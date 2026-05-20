@@ -1,0 +1,838 @@
+==========================================================================================
+FLUX COUPLING ANALYSIS - R00451[K,p] (Lysine Production via DAP Pathway)
+==========================================================================================
+
+Target: R00451[K,p] (DAP decarboxylase, meso-DAP -> Lysine)
+Solver: GAMS/CPLEX
+
+Coupling types (Burgard et al., 2004):
+  Fully coupled:        v_j/v_target = constant for ALL feasible solutions
+  Partially coupled:    v_j/v_target in [alpha,beta], nonzero, bidirectional
+  Directionally coupled: v_target>0 => v_j!=0 (one-way only)
+  Uncoupled:            v_j can be zero even when v_target>0
+  Blocked:              v_j = 0 always
+
+Method: Fix R00451 >= 1% of max, FVA all reactions via CPLEX.
+
+------------------------------------------------------------------------------------------
+Model                   MaxFlux    Fully  Partial   Direct  Uncoupled  Blocked
+------------------------------------------------------------------------------------------
+WT_DAP6              4.3533e-01        0        5        4       1353     1661
+WT_DAP8              4.1089e-01        0        5        4       1361     1653
+WT_DAP10             4.5663e-01        0        5        4       1359     1655
+WT_DAP12             5.2996e-01        0        5        4       1360     1654
+WT_DAP15             2.0128e+00        0        5        4       1366     1648
+WT_DAP18             5.4695e+00        0        8        4       1365     1646
+WT_DAP22             6.2886e+00        0        8        4       1360     1651
+WT_DAP30             5.3928e+00        0        8        4       1350     1661
+O2_DAP6              4.2590e-01        0        5        4       1365     1649
+O2_DAP8              4.8066e-01        0        5        5       1362     1651
+O2_DAP10             4.6384e-01        0        5        4       1361     1653
+O2_DAP12             4.8886e-01        0        5        4       1359     1655
+O2_DAP15             8.7084e-01        0        5        4       1366     1648
+O2_DAP18             2.4418e+00        0        5        4       1366     1648
+O2_DAP22             5.6978e+00        0        8        4       1362     1649
+O2_DAP30             5.6104e+00        0        8        4       1336     1675
+
+
+==========================================================================================
+LYSINE PATHWAY COUPLING DETAILS
+==========================================================================================
+
+--- WT DAP6 (max R00451 = 4.353275e-01) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.0000, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.1598]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.1153]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.1153]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.1128]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.1153]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.1128]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Uncoupled                 [-2.0000, 0.0000]         Lys cytosol-plastid transport
+  ExB_C00047[K]                       Uncoupled                 [0.0000, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Uncoupled                 [0.0000, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0028]          Biomass
+
+--- WT DAP8 (max R00451 = 4.108948e-01) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.0000, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.1595]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.1109]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.1109]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.1063]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.1109]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.1063]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Uncoupled                 [-2.0000, 0.0000]         Lys cytosol-plastid transport
+  ExB_C00047[K]                       Uncoupled                 [0.0000, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Uncoupled                 [0.0000, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0028]          Biomass
+
+--- WT DAP10 (max R00451 = 4.566281e-01) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.0000, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.1605]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.1128]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.1128]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.1082]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.1128]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.1082]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Uncoupled                 [-2.0000, 0.0000]         Lys cytosol-plastid transport
+  ExB_C00047[K]                       Uncoupled                 [0.0000, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Uncoupled                 [0.0000, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0028]          Biomass
+
+--- WT DAP12 (max R00451 = 5.299635e-01) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.0000, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.1616]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.1157]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.1157]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.1122]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.1157]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.1122]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Uncoupled                 [-2.0000, 0.0000]         Lys cytosol-plastid transport
+  ExB_C00047[K]                       Uncoupled                 [0.0000, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Uncoupled                 [0.0000, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0027]          Biomass
+
+--- WT DAP15 (max R00451 = 2.012797e+00) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.0000, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.1333]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.0990]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.0990]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.0954]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.0990]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.0954]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Uncoupled                 [-2.0000, 0.0000]         Lys cytosol-plastid transport
+  ExB_C00047[K]                       Uncoupled                 [0.0000, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Uncoupled                 [0.0000, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0016]          Biomass
+
+--- WT DAP18 (max R00451 = 5.469454e+00) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.0000, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.1222]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.0387]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.0387]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.0387]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.0387]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.0387]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Partially_Coupled         [-2.0000, -0.0038]        Lys cytosol-plastid transport
+  ExB_C00047[K]                       Partially_Coupled         [0.0038, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Partially_Coupled         [0.0038, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0005]          Biomass
+
+--- WT DAP22 (max R00451 = 6.288625e+00) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.0000, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.1395]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.0654]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.0645]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.0636]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.0654]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.0636]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Partially_Coupled         [-2.0000, -0.0111]        Lys cytosol-plastid transport
+  ExB_C00047[K]                       Partially_Coupled         [0.0111, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Partially_Coupled         [0.0111, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0001]          Biomass
+
+--- WT DAP30 (max R00451 = 5.392769e+00) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.0000, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.1346]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.0627]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.0618]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.0609]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.0627]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.0609]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Partially_Coupled         [-2.0000, -0.0142]        Lys cytosol-plastid transport
+  ExB_C00047[K]                       Partially_Coupled         [0.0142, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Partially_Coupled         [0.0142, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0001]          Biomass
+
+--- O2 DAP6 (max R00451 = 4.259043e-01) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.0000, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.1592]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.1142]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.1142]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.1114]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.1142]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.1114]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Uncoupled                 [-2.0000, 0.0000]         Lys cytosol-plastid transport
+  ExB_C00047[K]                       Uncoupled                 [0.0000, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Uncoupled                 [0.0000, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0028]          Biomass
+
+--- O2 DAP8 (max R00451 = 4.806633e-01) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.0000, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.1590]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.1068]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.1068]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.1024]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.1068]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.1024]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Uncoupled                 [-2.0000, 0.0000]         Lys cytosol-plastid transport
+  ExB_C00047[K]                       Uncoupled                 [0.0000, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Uncoupled                 [0.0000, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0028]          Biomass
+
+--- O2 DAP10 (max R00451 = 4.638445e-01) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.0000, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.1597]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.1084]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.1084]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.1040]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.1084]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.1040]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Uncoupled                 [-2.0000, 0.0000]         Lys cytosol-plastid transport
+  ExB_C00047[K]                       Uncoupled                 [0.0000, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Uncoupled                 [0.0000, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0028]          Biomass
+
+--- O2 DAP12 (max R00451 = 4.888598e-01) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.0000, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.1616]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.1161]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.1161]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.1127]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.1161]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.1127]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Uncoupled                 [-2.0000, 0.0000]         Lys cytosol-plastid transport
+  ExB_C00047[K]                       Uncoupled                 [0.0000, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Uncoupled                 [0.0000, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0027]          Biomass
+
+--- O2 DAP15 (max R00451 = 8.708356e-01) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.0000, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.1680]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.1189]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.1189]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.1140]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.1189]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.1140]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Uncoupled                 [-2.0000, 0.0000]         Lys cytosol-plastid transport
+  ExB_C00047[K]                       Uncoupled                 [0.0000, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Uncoupled                 [0.0000, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0031]          Biomass
+
+--- O2 DAP18 (max R00451 = 2.441827e+00) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.0000, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.1427]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.0897]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.0897]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.0883]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.0897]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.0883]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Uncoupled                 [-2.0000, 0.0000]         Lys cytosol-plastid transport
+  ExB_C00047[K]                       Uncoupled                 [0.0000, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Uncoupled                 [0.0000, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0013]          Biomass
+
+--- O2 DAP22 (max R00451 = 5.697827e+00) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.2039, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.2157]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.0836]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.0836]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.0836]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.0836]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.0799]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Partially_Coupled         [-2.0000, -0.0128]        Lys cytosol-plastid transport
+  ExB_C00047[K]                       Partially_Coupled         [0.0128, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Partially_Coupled         [0.0128, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0001]          Biomass
+
+--- O2 DAP30 (max R00451 = 5.610376e+00) ---
+  R00480[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Aspartate kinase
+  R00355[K,p]                         Partially_Coupled         [-2.0760, -0.0200]        Aspartate aminotransferase
+  R01954[K,p]                         Uncoupled                 [0.0000, 0.1648]          Aspartate-semialdehyde dehydrogenase
+  R02291[K,p]                         Directionally_Coupled     [0.0200, 2.0000]          Asp-semialdehyde production
+  R02292[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPS (committed step)
+  R04198[K,p]                         Partially_Coupled         [0.0200, 2.0000]          DHDPR
+  R02735[K,p]                         Partially_Coupled         [0.0200, 2.0000]          meso-DAP production
+  R00715[K,c]                         Uncoupled                 [0.0000, 0.0694]          LKR degradation (cytosol)
+  R00715[K,p]                         Uncoupled                 [0.0000, 0.0683]          LKR degradation (plastid)
+  R00716[K,c]                         Uncoupled                 [0.0000, 0.0672]          LKR alternative (cytosol)
+  R02313[K,c]                         Uncoupled                 [0.0000, 0.0694]          SDH degradation
+  R03102[K,c]                         Uncoupled                 [0.0000, 0.0672]          Aminoadipate-semialdehyde DH
+  R03658[K,m]                         Blocked                   [0.0000, 0.0000]          Lys degradation (mito)
+  R03658[K,p]                         Blocked                   [0.0000, 0.0000]          Lys degradation (plastid)
+  cpTransport_C00047[K]               Partially_Coupled         [-2.0000, -0.0150]        Lys cytosol-plastid transport
+  ExB_C00047[K]                       Partially_Coupled         [0.0150, 2.0000]          Lys boundary export
+  Exchange_C00047[K,L]                Partially_Coupled         [0.0150, 2.0000]          Lys exchange
+  Seed_Biomass[K]                     Uncoupled                 [0.0000, 0.0000]          Biomass
+
+
+==========================================================================================
+FULLY COUPLED REACTIONS (per model)
+==========================================================================================
+
+--- WT DAP6: 0 fully coupled ---
+
+--- WT DAP8: 0 fully coupled ---
+
+--- WT DAP10: 0 fully coupled ---
+
+--- WT DAP12: 0 fully coupled ---
+
+--- WT DAP15: 0 fully coupled ---
+
+--- WT DAP18: 0 fully coupled ---
+
+--- WT DAP22: 0 fully coupled ---
+
+--- WT DAP30: 0 fully coupled ---
+
+--- O2 DAP6: 0 fully coupled ---
+
+--- O2 DAP8: 0 fully coupled ---
+
+--- O2 DAP10: 0 fully coupled ---
+
+--- O2 DAP12: 0 fully coupled ---
+
+--- O2 DAP15: 0 fully coupled ---
+
+--- O2 DAP18: 0 fully coupled ---
+
+--- O2 DAP22: 0 fully coupled ---
+
+--- O2 DAP30: 0 fully coupled ---
+
+
+==========================================================================================
+PARTIALLY COUPLED REACTIONS (per model)
+==========================================================================================
+
+--- WT DAP6: 5 partially coupled ---
+  cpTransport_C00011[K]                         [   -5.7354,    -0.0353]  
+  R00355[K,p]                                   [   -2.0000,    -0.0200]  Aspartate aminotransferase
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+
+--- WT DAP8: 5 partially coupled ---
+  cpTransport_C00011[K]                         [   -5.7512,    -0.0353]  
+  R00355[K,p]                                   [   -2.0000,    -0.0200]  Aspartate aminotransferase
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+
+--- WT DAP10: 5 partially coupled ---
+  cpTransport_C00011[K]                         [   -5.7075,    -0.0353]  
+  R00355[K,p]                                   [   -2.0000,    -0.0200]  Aspartate aminotransferase
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+
+--- WT DAP12: 5 partially coupled ---
+  cpTransport_C00011[K]                         [   -5.3179,    -0.0353]  
+  R00355[K,p]                                   [   -2.0000,    -0.0200]  Aspartate aminotransferase
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+
+--- WT DAP15: 5 partially coupled ---
+  cpTransport_C00011[K]                         [   -5.9953,    -0.0353]  
+  R00355[K,p]                                   [   -2.0000,    -0.0200]  Aspartate aminotransferase
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+
+--- WT DAP18: 8 partially coupled ---
+  cpTransport_C00011[K]                         [   -6.1660,    -0.0353]  
+  R00355[K,p]                                   [   -2.0000,    -0.0200]  Aspartate aminotransferase
+  cpTransport_C00047[K]                         [   -2.0000,    -0.0038]  Lys cytosol-plastid transport
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+  ExB_C00047[K]                                 [    0.0038,     2.0000]  Lys boundary export
+  Exchange_C00047[K,L]                          [    0.0038,     2.0000]  Lys exchange
+
+--- WT DAP22: 8 partially coupled ---
+  cpTransport_C00011[K]                         [   -6.2307,    -0.0353]  
+  R00355[K,p]                                   [   -2.0000,    -0.0200]  Aspartate aminotransferase
+  cpTransport_C00047[K]                         [   -2.0000,    -0.0111]  Lys cytosol-plastid transport
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+  ExB_C00047[K]                                 [    0.0111,     2.0000]  Lys boundary export
+  Exchange_C00047[K,L]                          [    0.0111,     2.0000]  Lys exchange
+
+--- WT DAP30: 8 partially coupled ---
+  cpTransport_C00011[K]                         [   -6.3817,    -0.0353]  
+  R00355[K,p]                                   [   -2.0000,    -0.0200]  Aspartate aminotransferase
+  cpTransport_C00047[K]                         [   -2.0000,    -0.0142]  Lys cytosol-plastid transport
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+  ExB_C00047[K]                                 [    0.0142,     2.0000]  Lys boundary export
+  Exchange_C00047[K,L]                          [    0.0142,     2.0000]  Lys exchange
+
+--- O2 DAP6: 5 partially coupled ---
+  cpTransport_C00011[K]                         [   -5.7625,    -0.0353]  
+  R00355[K,p]                                   [   -2.0000,    -0.0200]  Aspartate aminotransferase
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+
+--- O2 DAP8: 5 partially coupled ---
+  cpTransport_C00011[K]                         [   -5.7310,    -0.0353]  
+  R00355[K,p]                                   [   -2.0000,    -0.0200]  Aspartate aminotransferase
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+
+--- O2 DAP10: 5 partially coupled ---
+  cpTransport_C00011[K]                         [   -5.6141,    -0.0353]  
+  R00355[K,p]                                   [   -2.0000,    -0.0200]  Aspartate aminotransferase
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+
+--- O2 DAP12: 5 partially coupled ---
+  cpTransport_C00011[K]                         [   -5.3611,    -0.0353]  
+  R00355[K,p]                                   [   -2.0000,    -0.0200]  Aspartate aminotransferase
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+
+--- O2 DAP15: 5 partially coupled ---
+  cpTransport_C00011[K]                         [   -5.4603,    -0.0353]  
+  R00355[K,p]                                   [   -2.0000,    -0.0200]  Aspartate aminotransferase
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+
+--- O2 DAP18: 5 partially coupled ---
+  cpTransport_C00011[K]                         [   -6.1440,    -0.0353]  
+  R00355[K,p]                                   [   -2.0000,    -0.0200]  Aspartate aminotransferase
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+
+--- O2 DAP22: 8 partially coupled ---
+  cpTransport_C00011[K]                         [   -8.5814,    -0.0353]  
+  R00355[K,p]                                   [   -2.2039,    -0.0200]  Aspartate aminotransferase
+  cpTransport_C00047[K]                         [   -2.0000,    -0.0128]  Lys cytosol-plastid transport
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+  ExB_C00047[K]                                 [    0.0128,     2.0000]  Lys boundary export
+  Exchange_C00047[K,L]                          [    0.0128,     2.0000]  Lys exchange
+
+--- O2 DAP30: 8 partially coupled ---
+  cpTransport_C00011[K]                         [   -7.3192,    -0.0353]  
+  R00355[K,p]                                   [   -2.0760,    -0.0200]  Aspartate aminotransferase
+  cpTransport_C00047[K]                         [   -2.0000,    -0.0150]  Lys cytosol-plastid transport
+  R02292[K,p]                                   [    0.0200,     2.0000]  DHDPS (committed step)
+  R02735[K,p]                                   [    0.0200,     2.0000]  meso-DAP production
+  R04198[K,p]                                   [    0.0200,     2.0000]  DHDPR
+  ExB_C00047[K]                                 [    0.0150,     2.0000]  Lys boundary export
+  Exchange_C00047[K,L]                          [    0.0150,     2.0000]  Lys exchange
+
+
+==========================================================================================
+DIRECTIONALLY COUPLED REACTIONS (per model)
+==========================================================================================
+
+--- WT DAP6: 4 directionally coupled ---
+  Exe4[K]                                       [    0.0311,     6.8677]  
+  Trans4[K]                                     [    0.0311,     6.8677]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+
+--- WT DAP8: 4 directionally coupled ---
+  Exe4[K]                                       [    0.0311,     6.8756]  
+  Trans4[K]                                     [    0.0311,     6.8756]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+
+--- WT DAP10: 4 directionally coupled ---
+  Exe4[K]                                       [    0.0311,     6.8538]  
+  Trans4[K]                                     [    0.0311,     6.8538]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+
+--- WT DAP12: 4 directionally coupled ---
+  Exe4[K]                                       [    0.0311,     6.2731]  
+  Trans4[K]                                     [    0.0311,     6.2731]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+
+--- WT DAP15: 4 directionally coupled ---
+  Exe4[K]                                       [    0.0311,     6.9204]  
+  Trans4[K]                                     [    0.0311,     6.9204]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+
+--- WT DAP18: 4 directionally coupled ---
+  Exe4[K]                                       [    0.0311,     7.1689]  
+  Trans4[K]                                     [    0.0311,     7.1689]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+
+--- WT DAP22: 4 directionally coupled ---
+  Exe4[K]                                       [    0.0435,     6.7555]  
+  Trans4[K]                                     [    0.0435,     6.7555]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+
+--- WT DAP30: 4 directionally coupled ---
+  Exe4[K]                                       [    0.0449,     7.1749]  
+  Trans4[K]                                     [    0.0449,     7.1749]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+
+--- O2 DAP6: 4 directionally coupled ---
+  Exe4[K]                                       [    0.0311,     6.8812]  
+  Trans4[K]                                     [    0.0311,     6.8812]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+
+--- O2 DAP8: 5 directionally coupled ---
+  Exe4[K]                                       [    0.0311,     6.8049]  
+  Trans4[K]                                     [    0.0311,     6.8049]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+  cpTransport_C00712[K]                         [   -0.0000,     0.5863]  
+
+--- O2 DAP10: 4 directionally coupled ---
+  Exe4[K]                                       [    0.0311,     6.6159]  
+  Trans4[K]                                     [    0.0311,     6.6159]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+
+--- O2 DAP12: 4 directionally coupled ---
+  Exe4[K]                                       [    0.0311,     6.3349]  
+  Trans4[K]                                     [    0.0311,     6.3349]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+
+--- O2 DAP15: 4 directionally coupled ---
+  Exe4[K]                                       [    0.0311,     5.8905]  
+  Trans4[K]                                     [    0.0311,     5.8905]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+
+--- O2 DAP18: 4 directionally coupled ---
+  Exe4[K]                                       [    0.0311,     6.2049]  
+  Trans4[K]                                     [    0.0311,     6.2049]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+
+--- O2 DAP22: 4 directionally coupled ---
+  Exe4[K]                                       [    0.0433,     9.0350]  
+  Trans4[K]                                     [    0.0433,     9.0350]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+
+--- O2 DAP30: 4 directionally coupled ---
+  Exe4[K]                                       [    0.0461,     7.8065]  
+  Trans4[K]                                     [    0.0461,     7.8065]  
+  R00480[K,p]                                   [    0.0200,     2.0000]  Aspartate kinase
+  R02291[K,p]                                   [    0.0200,     2.0000]  Asp-semialdehyde production
+
+
+==========================================================================================
+WT vs O2 COUPLING COMPARISON - LYSINE PATHWAY
+==========================================================================================
+
+
+  R00480[K,p] (Aspartate kinase):
+    DAP    WT                        O2                        Change    
+    6      Directionally_Coupled     Directionally_Coupled     
+    8      Directionally_Coupled     Directionally_Coupled     
+    10     Directionally_Coupled     Directionally_Coupled     
+    12     Directionally_Coupled     Directionally_Coupled     
+    15     Directionally_Coupled     Directionally_Coupled     
+    18     Directionally_Coupled     Directionally_Coupled     
+    22     Directionally_Coupled     Directionally_Coupled     
+    30     Directionally_Coupled     Directionally_Coupled     
+
+  R00355[K,p] (Aspartate aminotransferase):
+    DAP    WT                        O2                        Change    
+    6      Partially_Coupled         Partially_Coupled         
+    8      Partially_Coupled         Partially_Coupled         
+    10     Partially_Coupled         Partially_Coupled         
+    12     Partially_Coupled         Partially_Coupled         
+    15     Partially_Coupled         Partially_Coupled         
+    18     Partially_Coupled         Partially_Coupled         
+    22     Partially_Coupled         Partially_Coupled         
+    30     Partially_Coupled         Partially_Coupled         
+
+  R01954[K,p] (Aspartate-semialdehyde dehydrogenase):
+    DAP    WT                        O2                        Change    
+    6      Uncoupled                 Uncoupled                 
+    8      Uncoupled                 Uncoupled                 
+    10     Uncoupled                 Uncoupled                 
+    12     Uncoupled                 Uncoupled                 
+    15     Uncoupled                 Uncoupled                 
+    18     Uncoupled                 Uncoupled                 
+    22     Uncoupled                 Uncoupled                 
+    30     Uncoupled                 Uncoupled                 
+
+  R02291[K,p] (Asp-semialdehyde production):
+    DAP    WT                        O2                        Change    
+    6      Directionally_Coupled     Directionally_Coupled     
+    8      Directionally_Coupled     Directionally_Coupled     
+    10     Directionally_Coupled     Directionally_Coupled     
+    12     Directionally_Coupled     Directionally_Coupled     
+    15     Directionally_Coupled     Directionally_Coupled     
+    18     Directionally_Coupled     Directionally_Coupled     
+    22     Directionally_Coupled     Directionally_Coupled     
+    30     Directionally_Coupled     Directionally_Coupled     
+
+  R02292[K,p] (DHDPS (committed step)):
+    DAP    WT                        O2                        Change    
+    6      Partially_Coupled         Partially_Coupled         
+    8      Partially_Coupled         Partially_Coupled         
+    10     Partially_Coupled         Partially_Coupled         
+    12     Partially_Coupled         Partially_Coupled         
+    15     Partially_Coupled         Partially_Coupled         
+    18     Partially_Coupled         Partially_Coupled         
+    22     Partially_Coupled         Partially_Coupled         
+    30     Partially_Coupled         Partially_Coupled         
+
+  R04198[K,p] (DHDPR):
+    DAP    WT                        O2                        Change    
+    6      Partially_Coupled         Partially_Coupled         
+    8      Partially_Coupled         Partially_Coupled         
+    10     Partially_Coupled         Partially_Coupled         
+    12     Partially_Coupled         Partially_Coupled         
+    15     Partially_Coupled         Partially_Coupled         
+    18     Partially_Coupled         Partially_Coupled         
+    22     Partially_Coupled         Partially_Coupled         
+    30     Partially_Coupled         Partially_Coupled         
+
+  R02735[K,p] (meso-DAP production):
+    DAP    WT                        O2                        Change    
+    6      Partially_Coupled         Partially_Coupled         
+    8      Partially_Coupled         Partially_Coupled         
+    10     Partially_Coupled         Partially_Coupled         
+    12     Partially_Coupled         Partially_Coupled         
+    15     Partially_Coupled         Partially_Coupled         
+    18     Partially_Coupled         Partially_Coupled         
+    22     Partially_Coupled         Partially_Coupled         
+    30     Partially_Coupled         Partially_Coupled         
+
+  R00715[K,c] (LKR degradation (cytosol)):
+    DAP    WT                        O2                        Change    
+    6      Uncoupled                 Uncoupled                 
+    8      Uncoupled                 Uncoupled                 
+    10     Uncoupled                 Uncoupled                 
+    12     Uncoupled                 Uncoupled                 
+    15     Uncoupled                 Uncoupled                 
+    18     Uncoupled                 Uncoupled                 
+    22     Uncoupled                 Uncoupled                 
+    30     Uncoupled                 Uncoupled                 
+
+  R00715[K,p] (LKR degradation (plastid)):
+    DAP    WT                        O2                        Change    
+    6      Uncoupled                 Uncoupled                 
+    8      Uncoupled                 Uncoupled                 
+    10     Uncoupled                 Uncoupled                 
+    12     Uncoupled                 Uncoupled                 
+    15     Uncoupled                 Uncoupled                 
+    18     Uncoupled                 Uncoupled                 
+    22     Uncoupled                 Uncoupled                 
+    30     Uncoupled                 Uncoupled                 
+
+  R00716[K,c] (LKR alternative (cytosol)):
+    DAP    WT                        O2                        Change    
+    6      Uncoupled                 Uncoupled                 
+    8      Uncoupled                 Uncoupled                 
+    10     Uncoupled                 Uncoupled                 
+    12     Uncoupled                 Uncoupled                 
+    15     Uncoupled                 Uncoupled                 
+    18     Uncoupled                 Uncoupled                 
+    22     Uncoupled                 Uncoupled                 
+    30     Uncoupled                 Uncoupled                 
+
+  R02313[K,c] (SDH degradation):
+    DAP    WT                        O2                        Change    
+    6      Uncoupled                 Uncoupled                 
+    8      Uncoupled                 Uncoupled                 
+    10     Uncoupled                 Uncoupled                 
+    12     Uncoupled                 Uncoupled                 
+    15     Uncoupled                 Uncoupled                 
+    18     Uncoupled                 Uncoupled                 
+    22     Uncoupled                 Uncoupled                 
+    30     Uncoupled                 Uncoupled                 
+
+  R03102[K,c] (Aminoadipate-semialdehyde DH):
+    DAP    WT                        O2                        Change    
+    6      Uncoupled                 Uncoupled                 
+    8      Uncoupled                 Uncoupled                 
+    10     Uncoupled                 Uncoupled                 
+    12     Uncoupled                 Uncoupled                 
+    15     Uncoupled                 Uncoupled                 
+    18     Uncoupled                 Uncoupled                 
+    22     Uncoupled                 Uncoupled                 
+    30     Uncoupled                 Uncoupled                 
+
+  R03658[K,m] (Lys degradation (mito)):
+    DAP    WT                        O2                        Change    
+    6      Blocked                   Blocked                   
+    8      Blocked                   Blocked                   
+    10     Blocked                   Blocked                   
+    12     Blocked                   Blocked                   
+    15     Blocked                   Blocked                   
+    18     Blocked                   Blocked                   
+    22     Blocked                   Blocked                   
+    30     Blocked                   Blocked                   
+
+  R03658[K,p] (Lys degradation (plastid)):
+    DAP    WT                        O2                        Change    
+    6      Blocked                   Blocked                   
+    8      Blocked                   Blocked                   
+    10     Blocked                   Blocked                   
+    12     Blocked                   Blocked                   
+    15     Blocked                   Blocked                   
+    18     Blocked                   Blocked                   
+    22     Blocked                   Blocked                   
+    30     Blocked                   Blocked                   
+
+  cpTransport_C00047[K] (Lys cytosol-plastid transport):
+    DAP    WT                        O2                        Change    
+    6      Uncoupled                 Uncoupled                 
+    8      Uncoupled                 Uncoupled                 
+    10     Uncoupled                 Uncoupled                 
+    12     Uncoupled                 Uncoupled                 
+    15     Uncoupled                 Uncoupled                 
+    18     Partially_Coupled         Uncoupled                 YES
+    22     Partially_Coupled         Partially_Coupled         
+    30     Partially_Coupled         Partially_Coupled         
+
+  ExB_C00047[K] (Lys boundary export):
+    DAP    WT                        O2                        Change    
+    6      Uncoupled                 Uncoupled                 
+    8      Uncoupled                 Uncoupled                 
+    10     Uncoupled                 Uncoupled                 
+    12     Uncoupled                 Uncoupled                 
+    15     Uncoupled                 Uncoupled                 
+    18     Partially_Coupled         Uncoupled                 YES
+    22     Partially_Coupled         Partially_Coupled         
+    30     Partially_Coupled         Partially_Coupled         
+
+  Exchange_C00047[K,L] (Lys exchange):
+    DAP    WT                        O2                        Change    
+    6      Uncoupled                 Uncoupled                 
+    8      Uncoupled                 Uncoupled                 
+    10     Uncoupled                 Uncoupled                 
+    12     Uncoupled                 Uncoupled                 
+    15     Uncoupled                 Uncoupled                 
+    18     Partially_Coupled         Uncoupled                 YES
+    22     Partially_Coupled         Partially_Coupled         
+    30     Partially_Coupled         Partially_Coupled         
+
+  Seed_Biomass[K] (Biomass):
+    DAP    WT                        O2                        Change    
+    6      Uncoupled                 Uncoupled                 
+    8      Uncoupled                 Uncoupled                 
+    10     Uncoupled                 Uncoupled                 
+    12     Uncoupled                 Uncoupled                 
+    15     Uncoupled                 Uncoupled                 
+    18     Uncoupled                 Uncoupled                 
+    22     Uncoupled                 Uncoupled                 
+    30     Uncoupled                 Uncoupled                 
+
+
+--- End of Report ---

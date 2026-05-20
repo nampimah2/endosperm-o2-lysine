@@ -1,0 +1,75 @@
+FLUX SUM ANALYSIS: SUMMARY STATISTICS
+======================================================================
+
+DAP  6:  Metabolites=3458  WT_total_Φ=9019.7542  O2_total_Φ=9083.0148  Increased=170  Decreased=470  Unchanged=2818
+DAP  8:  Metabolites=3458  WT_total_Φ=9101.8164  O2_total_Φ=9085.8516  Increased=572  Decreased=110  Unchanged=2776
+DAP 10:  Metabolites=3458  WT_total_Φ=9020.7617  O2_total_Φ=9046.2104  Increased=473  Decreased=109  Unchanged=2876
+DAP 12:  Metabolites=3458  WT_total_Φ=9022.4831  O2_total_Φ=9022.1088  Increased=44  Decreased=559  Unchanged=2855
+DAP 15:  Metabolites=3458  WT_total_Φ=9152.4815  O2_total_Φ=9102.0540  Increased=136  Decreased=503  Unchanged=2819
+DAP 18:  Metabolites=3458  WT_total_Φ=9151.1961  O2_total_Φ=9071.9239  Increased=556  Decreased=105  Unchanged=2797
+DAP 22:  Metabolites=3458  WT_total_Φ=9134.3440  O2_total_Φ=9362.3126  Increased=200  Decreased=366  Unchanged=2892
+DAP 30:  Metabolites=3458  WT_total_Φ=9138.5619  O2_total_Φ=9134.4370  Increased=120  Decreased=494  Unchanged=2844
+
+
+TOP 20 METABOLITE TARGETS:
+----------------------------------------------------------------------
+    1. D-Glucose [cyt]                     [c]   INCREASED  Score=9.125630
+       Strategy: Enhance turnover (increase supply/demand)
+       Pathways: Glycolysis
+    2. D-Glucose [B]                       [B]   DECREASED  Score=6.922468
+       Strategy: Reduce turnover (limit competing usage)
+       Pathways: Glycolysis
+    3. D-Fructose []                       []   DECREASED  Score=4.729996
+       Strategy: Reduce turnover (limit competing usage)
+       Pathways: Other
+    4. D-Fructose [cyt]                    [c]   DECREASED  Score=3.824605
+       Strategy: Reduce turnover (limit competing usage)
+       Pathways: Other
+    5. ATP [cyt]                           [c]   DECREASED  Score=2.885845
+       Strategy: Reduce turnover (limit competing usage)
+       Pathways: Energy_Cofactors
+    6. ADP [cyt]                           [c]   DECREASED  Score=2.885839
+       Strategy: Reduce turnover (limit competing usage)
+       Pathways: Energy_Cofactors
+    7. D-Fructose-1,6-bisP [cyt]           [c]   INCREASED  Score=2.141567
+       Strategy: Enhance turnover (increase supply/demand)
+       Pathways: Glycolysis
+    8. L-Aspartate []                      []   INCREASED  Score=1.635936
+       Strategy: Enhance turnover (increase supply/demand)
+       Pathways: Lysine_Biosynthesis; Aspartate_Family
+    9. L-Aspartate [cyt]                   [c]   INCREASED  Score=1.635932
+       Strategy: Enhance turnover (increase supply/demand)
+       Pathways: Lysine_Biosynthesis; Aspartate_Family
+   10. D-Glyceraldehyde-3P [cyt]           [c]   INCREASED  Score=1.517414
+       Strategy: Enhance turnover (increase supply/demand)
+       Pathways: Glycolysis
+   11. Malate [cyt]                        [c]   INCREASED  Score=1.507067
+       Strategy: Enhance turnover (increase supply/demand)
+       Pathways: TCA_Cycle
+   12. Malate [pla]                        [p]   INCREASED  Score=1.490359
+       Strategy: Enhance turnover (increase supply/demand)
+       Pathways: TCA_Cycle
+   13. Oxaloacetate [cyt]                  [c]   INCREASED  Score=1.255750
+       Strategy: Enhance turnover (increase supply/demand)
+       Pathways: TCA_Cycle
+   14. 2-Oxoglutarate [pla]                [p]   INCREASED  Score=1.173516
+       Strategy: Enhance turnover (increase supply/demand)
+       Pathways: TCA_Cycle
+   15. alpha-D-Glucose-6P [cyt]            [c]   DECREASED  Score=1.125236
+       Strategy: Reduce turnover (limit competing usage)
+       Pathways: Glycolysis
+   16. Pyruvate [pla]                      [p]   DECREASED  Score=1.109685
+       Strategy: Reduce turnover (limit competing usage)
+       Pathways: TCA_Cycle; Glycolysis
+   17. D-Fructose-6P [cyt]                 [c]   INCREASED  Score=1.040454
+       Strategy: Enhance turnover (increase supply/demand)
+       Pathways: Glycolysis
+   18. 2-Oxoglutarate [cyt]                [c]   INCREASED  Score=1.003294
+       Strategy: Enhance turnover (increase supply/demand)
+       Pathways: TCA_Cycle
+   19. Sucrose [B]                         [B]   DECREASED  Score=0.983428
+       Strategy: Reduce turnover (limit competing usage)
+       Pathways: Other
+   20. L-Glutamate [pla]                   [p]   INCREASED  Score=0.978185
+       Strategy: Enhance turnover (increase supply/demand)
+       Pathways: Amino_Acids

@@ -1,0 +1,46 @@
+
+  === OVERALL SUMMARY ===
+  Total DAP time points: 8
+  Total reactions in model: ~3024
+
+  Significantly different reactions (|diff| > 1e-6) per DAP:
+    DAP  6: 373 reactions
+    DAP  8: 455 reactions
+    DAP 10: 331 reactions
+    DAP 12: 367 reactions
+    DAP 15: 489 reactions
+    DAP 18: 468 reactions
+    DAP 22: 314 reactions
+    DAP 30: 443 reactions
+
+  === LYSINE DEMAND THROUGH BIOMASS ===
+  (Biomass_flux × |Lys_coefficient| = Lysine consumed for biomass)
+    DAP  6: WT Lys demand = 0.00000251  O2 = 0.00000246  FC = 0.9789
+    DAP  8: WT Lys demand = 0.00000237  O2 = 0.00000278  FC = 1.1700
+    DAP 10: WT Lys demand = 0.00000263  O2 = 0.00000268  FC = 1.0169
+    DAP 12: WT Lys demand = 0.00000305  O2 = 0.00000281  FC = 0.9231
+    DAP 15: WT Lys demand = 0.00000673  O2 = 0.00000557  FC = 0.8284
+    DAP 18: WT Lys demand = 0.00000518  O2 = 0.00000677  FC = 1.3066
+    DAP 22: WT Lys demand = 0.00000151  O2 = 0.00000149  FC = 0.9867
+    DAP 30: WT Lys demand = 0.00000074  O2 = 0.00000025  FC = 0.3405
+
+  === LKR (LYSINE DEGRADATION) FLUX ===
+  R00715 is Lysine-ketoglutarate reductase (main degradation)
+    DAP  6: WT(c)=  0.000000 O2(c)=  0.000001  |  WT(p)=  0.000000 O2(p)=  0.000000
+    DAP  8: WT(c)=  0.000000 O2(c)=  0.000001  |  WT(p)=  0.000000 O2(p)=  0.000000
+    DAP 10: WT(c)=  0.000000 O2(c)=  0.000000  |  WT(p)=  0.000000 O2(p)=  0.000000
+    DAP 12: WT(c)=  0.000000 O2(c)=  0.000000  |  WT(p)=  0.000000 O2(p)=  0.000000
+    DAP 15: WT(c)=  0.000000 O2(c)=  0.000000  |  WT(p)=  0.000000 O2(p)=  0.000000
+    DAP 18: WT(c)=  0.000000 O2(c)=  0.000000  |  WT(p)=  0.000000 O2(p)=  0.000000
+    DAP 22: WT(c)=  0.000000 O2(c)=  0.000000  |  WT(p)=  0.000000 O2(p)=  0.000000
+    DAP 30: WT(c)=  0.000000 O2(c)=  0.000000  |  WT(p)=  0.000000 O2(p)=  0.000000
+
+  === DAP DECARBOXYLASE (R00451 - Final Lysine Biosynthesis Step) ===
+    DAP  6: WT=  0.000003  O2=  0.000004  FC=1.4861
+    DAP  8: WT=  0.000002  O2=  0.000004  FC=1.7089
+    DAP 10: WT=  0.000003  O2=  0.000003  FC=1.0190
+    DAP 12: WT=  0.000003  O2=  0.000003  FC=0.9213
+    DAP 15: WT=  0.000007  O2=  0.005803  FC=862.2689
+    DAP 18: WT=  0.000005  O2=  0.000007  FC=1.3069
+    DAP 22: WT=  0.000002  O2=  1.250782  FC=828332.2980
+    DAP 30: WT=  0.000000  O2=  0.000000  FC=inf
